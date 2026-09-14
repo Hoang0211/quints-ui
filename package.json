@@ -1,0 +1,32 @@
+{
+  "name": "quints-ui",
+  "author": "Hoang",
+  "version": "0.0.0",
+  "private": true,
+  "description": "A React + TypeScript UI component library with CSS-custom-property based theming.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "keywords": [],
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.10.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "prettier": "^3.9.6",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "typescript": "<6.1.0",
+    "typescript-eslint": "^8.70.0"
+  },
+  "peerDependencies": {
+    "react": "^18 || ^19",
+    "react-dom": "^18 || ^19"
+  },
+  "license": "ISC",
+  "type": "module"
+}
