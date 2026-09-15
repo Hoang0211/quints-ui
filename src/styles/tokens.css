@@ -25,8 +25,7 @@
   --q-color-info: #0284c7;
 
   /* Typography */
-  --q-font-family-base:
-    system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --q-font-family-base: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --q-font-size-sm: 0.875rem;
   --q-font-size-md: 1rem;
   --q-font-size-lg: 1.25rem;
