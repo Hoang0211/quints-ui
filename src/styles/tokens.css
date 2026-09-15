@@ -1,0 +1,60 @@
+:root {
+  /* Color — brand */
+  --q-color-primary: #4f46e5;
+  --q-color-primary-hover: #4338ca;
+  --q-color-primary-active: #3730a3;
+  --q-color-primary-contrast: #ffffff;
+
+  /* Color — brand (secondary) */
+  --q-color-secondary: #64748b;
+  --q-color-secondary-hover: #475569;
+  --q-color-secondary-active: #334155;
+  --q-color-secondary-contrast: #ffffff;
+
+  /* Color — neutral */
+  --q-color-bg: #ffffff;
+  --q-color-surface: #f8fafc;
+  --q-color-border: #e2e8f0;
+  --q-color-text: #0f172a;
+  --q-color-text-muted: #64748b;
+
+  /* Color — status */
+  --q-color-success: #16a34a;
+  --q-color-warning: #d97706;
+  --q-color-alert: #dc2626;
+  --q-color-info: #0284c7;
+
+  /* Typography */
+  --q-font-family-base:
+    system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --q-font-size-sm: 0.875rem;
+  --q-font-size-md: 1rem;
+  --q-font-size-lg: 1.25rem;
+  --q-font-weight-normal: 400;
+  --q-font-weight-medium: 500;
+  --q-font-weight-bold: 700;
+  --q-line-height-base: 1.5;
+
+  /* Spacing */
+  --q-space-xs: 0.25rem;
+  --q-space-sm: 0.5rem;
+  --q-space-md: 1rem;
+  --q-space-lg: 1.5rem;
+  --q-space-xl: 3rem;
+
+  /* Radius */
+  --q-radius-sm: 0.25rem;
+  --q-radius-md: 0.5rem;
+  --q-radius-lg: 1rem;
+  --q-radius-full: 9999px;
+
+  /* Shadow */
+  --q-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --q-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --q-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+
+  /* Motion */
+  --q-duration-fast: 100ms;
+  --q-duration-base: 200ms;
+  --q-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+}
