@@ -22,6 +22,8 @@
   --q-color-success: #16a34a;
   --q-color-warning: #d97706;
   --q-color-alert: #dc2626;
+  --q-color-alert-hover: #b91c1c;
+  --q-color-alert-contrast: #ffffff;
   --q-color-info: #0284c7;
 
   /* Typography */
