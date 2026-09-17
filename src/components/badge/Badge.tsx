@@ -2,13 +2,7 @@ import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
 import "./Badge.css";
 
 export type BadgeVariant =
-  | "primary"
-  | "secondary"
-  | "neutral"
-  | "success"
-  | "warning"
-  | "alert"
-  | "info";
+  "primary" | "secondary" | "neutral" | "success" | "warning" | "alert" | "info";
 export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   variant?: BadgeVariant;
   icon?: ReactNode;
@@ -17,7 +11,10 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
 }
 
 export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
-  ({ variant = "neutral", icon, removable = false, onRemove, className, children, ...rest }, ref) => {
+  (
+    { variant = "neutral", icon, removable = false, onRemove, className, children, ...rest },
+    ref,
+  ) => {
     const classes = ["q-badge", `q-badge--${variant}`, className].filter(Boolean).join(" ");
 
     return (
@@ -41,7 +38,12 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
               aria-hidden="true"
               focusable="false"
             >
-              <path d="M1 1L11 11M11 1L1 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              <path
+                d="M1 1L11 11M11 1L1 11"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
             </svg>
           </button>
         )}
