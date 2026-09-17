@@ -20,11 +20,14 @@
 
   /* Color — status */
   --q-color-success: #16a34a;
+  --q-color-success-contrast: #ffffff;
   --q-color-warning: #d97706;
+  --q-color-warning-contrast: #ffffff;
   --q-color-alert: #dc2626;
   --q-color-alert-hover: #b91c1c;
   --q-color-alert-contrast: #ffffff;
   --q-color-info: #0284c7;
+  --q-color-info-contrast: #ffffff;
 
   /* Typography */
   --q-font-family-base: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
