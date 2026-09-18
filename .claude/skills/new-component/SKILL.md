@@ -26,6 +26,6 @@ The component name in PascalCase, e.g. `/new-component Badge`. If not given, ask
 
 8. Update `src/index.ts` to export the new component and its exported types, matching the Button export pattern.
 
-9. Run `npm run lint`, `npm run typecheck`, `npm run build`, and `npm test`. Fix anything that fails before finishing.
+9. Run `npm run format` (not just `format:check`) before the other checks — AI-generated files reliably need a Prettier pass. Then run `npm run lint`, `npm run typecheck`, `npm run build`, and `npm test`. Fix anything that fails before finishing.
 
 10. Stop there. Branch creation, opening the PR, and merging are left to the user per the standing one-component-one-PR workflow — do not run git commands beyond what's needed to verify the working tree, and do not open a PR yourself.
