@@ -40,3 +40,6 @@ export type {
 
 export { Checkbox } from "./components/checkbox/Checkbox";
 export type { CheckboxProps, CheckboxSize } from "./components/checkbox/Checkbox";
+
+export { Toggle } from "./components/toggle/Toggle";
+export type { ToggleProps, ToggleSize, ToggleLabelPosition } from "./components/toggle/Toggle";
