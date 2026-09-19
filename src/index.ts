@@ -29,3 +29,11 @@ export type {
 
 export { DateTime } from "./components/date-time/DateTime";
 export type { DateTimeProps } from "./components/date-time/DateTime";
+
+export { RadioGroup } from "./components/radio/Radio";
+export type {
+  RadioGroupProps,
+  RadioGroupItemProps,
+  RadioGroupOrientation,
+  RadioGroupSize,
+} from "./components/radio/Radio";
