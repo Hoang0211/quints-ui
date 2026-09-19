@@ -43,3 +43,12 @@ export type { CheckboxProps, CheckboxSize } from "./components/checkbox/Checkbox
 
 export { Toggle } from "./components/toggle/Toggle";
 export type { ToggleProps, ToggleSize, ToggleLabelPosition } from "./components/toggle/Toggle";
+
+export { Select } from "./components/select/Select";
+export type {
+  SelectProps,
+  SelectSize,
+  SelectItemProps,
+  SelectGroupProps,
+  SelectGroupLabelProps,
+} from "./components/select/Select";
