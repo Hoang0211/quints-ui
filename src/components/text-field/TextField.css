@@ -1,0 +1,99 @@
+.q-text-field {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--q-space-xs);
+  font-family: var(--q-font-family-base);
+}
+
+.q-text-field--full-width {
+  display: flex;
+  width: 100%;
+}
+
+.q-text-field__label {
+  font-size: var(--q-font-size-sm);
+  font-weight: var(--q-font-weight-medium);
+  color: var(--q-color-text);
+}
+
+.q-text-field__control {
+  display: flex;
+  align-items: center;
+  gap: var(--q-space-sm);
+  border-radius: var(--q-radius-md);
+  border: 1px solid var(--q-color-border);
+  background-color: var(--q-color-bg);
+  transition: border-color var(--q-duration-base) var(--q-easing-standard);
+}
+
+.q-text-field--filled .q-text-field__control {
+  background-color: var(--q-color-surface);
+  border-color: transparent;
+}
+
+.q-text-field__control:focus-within {
+  border-color: var(--q-color-primary);
+  outline: 2px solid var(--q-color-primary);
+  outline-offset: 2px;
+}
+
+.q-text-field--error .q-text-field__control {
+  border-color: var(--q-color-alert);
+}
+
+.q-text-field--error .q-text-field__control:focus-within {
+  outline-color: var(--q-color-alert);
+}
+
+.q-text-field--disabled .q-text-field__control {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.q-text-field__icon {
+  display: inline-flex;
+  color: var(--q-color-text-muted);
+}
+
+.q-text-field__input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--q-color-text);
+  font-family: inherit;
+}
+
+.q-text-field__input::placeholder {
+  color: var(--q-color-text-muted);
+}
+
+.q-text-field__input:disabled {
+  cursor: not-allowed;
+}
+
+.q-text-field--sm .q-text-field__control {
+  padding: var(--q-space-xs) var(--q-space-sm);
+}
+
+.q-text-field--sm .q-text-field__input {
+  font-size: var(--q-font-size-sm);
+}
+
+.q-text-field--md .q-text-field__control {
+  padding: var(--q-space-sm) var(--q-space-md);
+}
+
+.q-text-field--md .q-text-field__input {
+  font-size: var(--q-font-size-md);
+}
+
+.q-text-field__helper {
+  font-size: var(--q-font-size-sm);
+  color: var(--q-color-text-muted);
+}
+
+.q-text-field__helper--error {
+  color: var(--q-color-alert);
+}

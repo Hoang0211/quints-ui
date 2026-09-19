@@ -19,3 +19,10 @@ export type {
   CardContentProps,
   CardFooterProps,
 } from "./components/card/Card";
+
+export { TextField } from "./components/text-field/TextField";
+export type {
+  TextFieldProps,
+  TextFieldVariant,
+  TextFieldSize,
+} from "./components/text-field/TextField";
