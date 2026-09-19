@@ -52,3 +52,11 @@ export type {
   SelectGroupProps,
   SelectGroupLabelProps,
 } from "./components/select/Select";
+
+export { Textarea } from "./components/textarea/Textarea";
+export type {
+  TextareaProps,
+  TextareaVariant,
+  TextareaSize,
+  TextareaResize,
+} from "./components/textarea/Textarea";
