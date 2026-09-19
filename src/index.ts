@@ -37,3 +37,6 @@ export type {
   RadioGroupOrientation,
   RadioGroupSize,
 } from "./components/radio/Radio";
+
+export { Checkbox } from "./components/checkbox/Checkbox";
+export type { CheckboxProps, CheckboxSize } from "./components/checkbox/Checkbox";

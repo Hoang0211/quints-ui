@@ -1,0 +1,115 @@
+.q-checkbox {
+  display: flex;
+  flex-direction: column;
+  gap: var(--q-space-xs);
+  font-family: var(--q-font-family-base);
+}
+
+.q-checkbox__row {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--q-space-sm);
+}
+
+.q-checkbox__control {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.125rem;
+  height: 1.125rem;
+  border-radius: var(--q-radius-sm);
+  border: 1.5px solid var(--q-color-border);
+  background-color: var(--q-color-bg);
+  color: var(--q-color-primary-contrast);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition:
+    background-color var(--q-duration-base) var(--q-easing-standard),
+    border-color var(--q-duration-base) var(--q-easing-standard);
+}
+
+.q-checkbox__control:hover:not([data-disabled]) {
+  border-color: var(--q-color-primary);
+}
+
+.q-checkbox__control[data-state="checked"],
+.q-checkbox__control[data-state="indeterminate"] {
+  background-color: var(--q-color-primary);
+  border-color: var(--q-color-primary);
+}
+
+.q-checkbox__control:focus-visible {
+  outline: 2px solid var(--q-color-primary);
+  outline-offset: 2px;
+}
+
+.q-checkbox__control[data-disabled] {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.q-checkbox__indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.q-checkbox__icon-check,
+.q-checkbox__icon-dash {
+  width: 0.7rem;
+  height: 0.7rem;
+}
+
+.q-checkbox__icon-dash {
+  display: none;
+}
+
+.q-checkbox__control[data-state="indeterminate"] .q-checkbox__icon-check {
+  display: none;
+}
+
+.q-checkbox__control[data-state="indeterminate"] .q-checkbox__icon-dash {
+  display: block;
+}
+
+.q-checkbox__label {
+  font-size: var(--q-font-size-md);
+  color: var(--q-color-text);
+  cursor: pointer;
+}
+
+.q-checkbox--sm .q-checkbox__control {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.q-checkbox--sm .q-checkbox__icon-check,
+.q-checkbox--sm .q-checkbox__icon-dash {
+  width: 0.55rem;
+  height: 0.55rem;
+}
+
+.q-checkbox--sm .q-checkbox__label {
+  font-size: var(--q-font-size-sm);
+}
+
+.q-checkbox--error .q-checkbox__control {
+  border-color: var(--q-color-alert);
+}
+
+.q-checkbox--disabled .q-checkbox__label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.q-checkbox__helper {
+  font-size: var(--q-font-size-sm);
+  color: var(--q-color-text-muted);
+}
+
+.q-checkbox__helper--error {
+  color: var(--q-color-alert);
+}
