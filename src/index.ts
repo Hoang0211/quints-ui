@@ -26,3 +26,6 @@ export type {
   TextFieldVariant,
   TextFieldSize,
 } from "./components/text-field/TextField";
+
+export { DateTime } from "./components/date-time/DateTime";
+export type { DateTimeProps } from "./components/date-time/DateTime";

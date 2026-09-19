@@ -67,5 +67,8 @@
     "react-dom": "^18 || ^19"
   },
   "license": "ISC",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "@radix-ui/react-popover": "^1.1.23"
+  }
 }
