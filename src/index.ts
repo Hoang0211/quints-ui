@@ -73,3 +73,12 @@ export type {
   DialogBodyProps,
   DialogFooterProps,
 } from "./components/dialog/Dialog";
+
+export { Tabs } from "./components/tabs/Tabs";
+export type {
+  TabsProps,
+  TabsSize,
+  TabsListProps,
+  TabsTriggerProps,
+  TabsContentProps,
+} from "./components/tabs/Tabs";
