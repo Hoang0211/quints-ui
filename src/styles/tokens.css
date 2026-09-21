@@ -11,6 +11,12 @@
   --q-color-secondary-active: #334155;
   --q-color-secondary-contrast: #ffffff;
 
+  /* Color — brand (accent) */
+  --q-color-accent: #0d9488;
+  --q-color-accent-hover: #0f766e;
+  --q-color-accent-active: #115e59;
+  --q-color-accent-contrast: #ffffff;
+
   /* Color — neutral */
   --q-color-bg: #ffffff;
   --q-color-surface: #f8fafc;
