@@ -60,3 +60,16 @@ export type {
   TextareaSize,
   TextareaResize,
 } from "./components/textarea/Textarea";
+
+export { Dialog } from "./components/dialog/Dialog";
+export type {
+  DialogProps,
+  DialogTriggerProps,
+  DialogCloseProps,
+  DialogContentProps,
+  DialogHeaderProps,
+  DialogTitleProps,
+  DialogDescriptionProps,
+  DialogBodyProps,
+  DialogFooterProps,
+} from "./components/dialog/Dialog";
