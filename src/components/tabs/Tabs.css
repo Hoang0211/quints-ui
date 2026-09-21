@@ -1,0 +1,89 @@
+.q-tabs__list {
+  display: flex;
+  gap: var(--q-space-xs);
+  font-family: var(--q-font-family-base);
+}
+
+.q-tabs__list[data-orientation="horizontal"] {
+  border-bottom: 1px solid var(--q-color-border);
+}
+
+.q-tabs__list[data-orientation="vertical"] {
+  flex-direction: column;
+  align-items: stretch;
+  border-right: 1px solid var(--q-color-border);
+  padding-right: var(--q-space-sm);
+}
+
+.q-tabs__trigger {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--q-space-sm) var(--q-space-md);
+  color: var(--q-color-text-muted);
+  font-family: inherit;
+  font-weight: var(--q-font-weight-medium);
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color var(--q-duration-base) var(--q-easing-standard);
+}
+
+.q-tabs__trigger:hover {
+  color: var(--q-color-text);
+}
+
+.q-tabs__trigger:focus-visible {
+  outline: 2px solid var(--q-color-primary);
+  outline-offset: 2px;
+}
+
+.q-tabs__trigger[data-disabled] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.q-tabs__trigger[data-state="active"] {
+  color: var(--q-color-primary);
+}
+
+.q-tabs__trigger[data-state="active"][data-orientation="horizontal"] {
+  border-bottom-color: var(--q-color-primary);
+}
+
+.q-tabs__trigger[data-orientation="vertical"] {
+  justify-content: flex-start;
+  border-bottom: none;
+  border-right: 2px solid transparent;
+  margin-bottom: 0;
+  margin-right: calc(-1 * var(--q-space-sm) - 1px);
+  padding-right: var(--q-space-sm);
+}
+
+.q-tabs__trigger[data-state="active"][data-orientation="vertical"] {
+  border-right-color: var(--q-color-primary);
+}
+
+.q-tabs__list--sm .q-tabs__trigger {
+  padding: var(--q-space-xs) var(--q-space-sm);
+  font-size: var(--q-font-size-sm);
+}
+
+.q-tabs__list--md .q-tabs__trigger {
+  padding: var(--q-space-sm) var(--q-space-md);
+  font-size: var(--q-font-size-md);
+}
+
+.q-tabs__content {
+  padding: var(--q-space-md) 0;
+  font-family: var(--q-font-family-base);
+  font-size: var(--q-font-size-md);
+  color: var(--q-color-text);
+}
+
+.q-tabs__content:focus-visible {
+  outline: 2px solid var(--q-color-primary);
+  outline-offset: 2px;
+}
