@@ -3,7 +3,17 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { describe, expect, it, vi } from "vitest";
-import { Badge } from "./Badge";
+import { Badge, type BadgeVariant } from "./Badge";
+
+const VARIANTS: BadgeVariant[] = [
+  "primary",
+  "secondary",
+  "neutral",
+  "success",
+  "warning",
+  "alert",
+  "info",
+];
 
 describe("Badge", () => {
   it("renders with the given label", () => {
@@ -61,6 +71,12 @@ describe("Badge", () => {
         Accessible
       </Badge>,
     );
+    const results = await axe(container);
+    expect(results.violations).toHaveLength(0);
+  });
+
+  it.each(VARIANTS)("has no accessibility violations for the %s variant", async (variant) => {
+    const { container } = render(<Badge variant={variant}>Accessible</Badge>);
     const results = await axe(container);
     expect(results.violations).toHaveLength(0);
   });
