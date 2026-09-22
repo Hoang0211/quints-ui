@@ -2,6 +2,8 @@
 
 A React + TypeScript UI component library with CSS-custom-property based theming — rebrand any consuming app by overriding design tokens, no JS `ThemeProvider` required.
 
+**[View the live Storybook →](https://hoang0211.github.io/quints-ui/)**
+
 ## Components
 
 - **General**: Button, Badge, Alert, Card
@@ -15,7 +17,7 @@ A React + TypeScript UI component library with CSS-custom-property based theming
 - **Styling**: plain CSS per component, `--q-` prefixed custom-property design tokens (no CSS-in-JS, no CSS Modules, no theme provider)
 - **Interaction primitives**: [Radix Primitives](https://radix-ui.com/primitives) as the behavioral base for components with non-trivial focus/keyboard/positioning logic (Dialog, Tabs, Select, DateTime, RadioGroup, Checkbox, Toggle) — hand-built markup and styling on top
 - **Testing**: [Vitest](https://vitest.dev) + [React Testing Library](https://testing-library.com/react) + `@testing-library/user-event` + [`vitest-axe`](https://github.com/chaance/vitest-axe) for accessibility checks
-- **Docs**: [Storybook](https://storybook.js.org) (`@storybook/react-vite`)
+- **Docs**: [Storybook](https://storybook.js.org) (`@storybook/react-vite`), deployed to [GitHub Pages](https://hoang0211.github.io/quints-ui/)
 - **Linting/formatting**: ESLint + Prettier
 
 ## Theming

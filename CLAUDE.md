@@ -15,6 +15,8 @@ Each component lives in its own folder under `src/components/<kebab-case-name>/`
 
 Established API pattern: `variant`/`size` props, `forwardRef` to the underlying DOM element, consumer `className` merged after generated classes (never overridden), native attributes extended via the relevant `*HTMLAttributes<T>` interface.
 
+Compound components (`Card`, `RadioGroup`, `Select`, `Dialog`, `Tabs`) attach their named sub-components onto the root export via `Object.assign(Root, { Sub: SubComponent, ... })` — e.g. `Dialog.Content`, `Tabs.Trigger`. For a component wrapping a Radix primitive, sub-components typically wrap the matching Radix piece (`ComponentPropsWithoutRef`/`ComponentRef` off `typeof RadixPrimitive.X`) rather than being fully hand-rolled.
+
 ## Design Tokens
 
 Brand colors (primary/secondary) each have base/`-hover`/`-active`/`-contrast` variants. Status colors (success/warning/alert/info) currently only have a base value — add `-hover`/`-contrast` tokens as soon as a component's variant actually needs them (already done for `alert`).
@@ -29,7 +31,10 @@ This is an ongoing, expandable library, not a fixed six-component set — new co
 - `vitest-axe` (v0.1.0) has broken TypeScript types for its `toHaveNoViolations()` matcher against the current Vitest version. Assert `(await axe(container)).violations` has length 0 instead of using the matcher.
 - `@testing-library/jest-dom` is wired via the `@testing-library/jest-dom/vitest` subpath import in `src/test/setup.ts`.
 - A file outside `src/` needing a `*.css` side-effect import (e.g. `.storybook/preview.tsx`) must be added to `tsconfig.json`'s `include` — the ambient `declare module "*.css"` (`src/css.d.ts`) only applies within the same TS program.
+- jsdom doesn't implement several browser APIs that Radix-based components rely on: `ResizeObserver` (Popover/Select positioning), and `hasPointerCapture`/`setPointerCapture`/`releasePointerCapture`/`scrollIntoView` (Select's trigger and viewport). Stub whichever ones a component's tests actually hit directly in that component's own test file (see `DateTime.test.tsx`/`Select.test.tsx`), not in the shared `src/test/setup.ts`.
 
 ## Workflow
 
 One component = one git branch = one PR. Tests must pass before merge — enforced by GitHub Actions CI (`lint`, `typecheck`, `build`, `test`, `format:check`) as a required status check on `main`.
+
+Storybook auto-deploys to GitHub Pages via `.github/workflows/deploy-storybook.yml`, triggered by `workflow_run` on the `CI` workflow's completion (not a separate `push` trigger) so a failing CI run never publishes a broken build.
