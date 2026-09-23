@@ -1,9 +1,16 @@
 {
   "name": "quints-ui",
   "author": "Hoang",
-  "version": "0.0.0",
-  "private": true,
+  "version": "0.1.0",
   "description": "A React + TypeScript UI component library with CSS-custom-property based theming.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hoang0211/quints-ui.git"
+  },
+  "homepage": "https://hoang0211.github.io/quints-ui/",
+  "bugs": {
+    "url": "https://github.com/Hoang0211/quints-ui/issues"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.cts",
@@ -37,7 +44,13 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
-  "keywords": [],
+  "keywords": [
+    "react",
+    "component-library",
+    "ui",
+    "design-system",
+    "typescript"
+  ],
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@storybook/addon-a11y": "^10.6.0",
