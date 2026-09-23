@@ -19,7 +19,7 @@ Compound components (`Card`, `RadioGroup`, `Select`, `Dialog`, `Tabs`) attach th
 
 ## Design Tokens
 
-Brand colors (primary/secondary) each have base/`-hover`/`-active`/`-contrast` variants. Status colors (success/warning/alert/info) currently only have a base value — add `-hover`/`-contrast` tokens as soon as a component's variant actually needs them (already done for `alert`).
+Brand colors (primary/secondary/accent) each have base/`-hover`/`-active`/`-contrast` variants. Status colors (success/warning/alert/info) all have base/`-contrast` pairs — `-contrast` (always white) is needed by any solid-fill-plus-text usage (e.g. `Badge`) to pass WCAG contrast, so add it for a color as soon as such a usage exists. Only `alert` additionally has `-hover`, since that's the only status color a component (`Button`) currently uses as an interactive/hoverable surface — add `-hover` to the others only once a component actually needs it.
 
 ## Radix UI Scope
 
@@ -38,3 +38,5 @@ This is an ongoing, expandable library, not a fixed six-component set — new co
 One component = one git branch = one PR. Tests must pass before merge — enforced by GitHub Actions CI (`lint`, `typecheck`, `build`, `test`, `format:check`) as a required status check on `main`.
 
 Storybook auto-deploys to GitHub Pages via `.github/workflows/deploy-storybook.yml`, triggered by `workflow_run` on the `CI` workflow's completion (not a separate `push` trigger) so a failing CI run never publishes a broken build.
+
+Published to npm as `quints-ui` (0.1.0+). Version bumps and `npm publish` are manual — there's no Changesets or CI-driven release automation yet, so bump `package.json`'s `version` and publish directly when cutting a new release.

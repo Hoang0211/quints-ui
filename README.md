@@ -4,6 +4,23 @@ A React + TypeScript UI component library with CSS-custom-property based theming
 
 **[View the live Storybook →](https://hoang0211.github.io/quints-ui/)**
 
+## Installation
+
+```bash
+npm install quints-ui
+```
+
+```tsx
+import { Button } from "quints-ui";
+import "quints-ui/style.css";
+
+function App() {
+  return <Button variant="primary">Click me</Button>;
+}
+```
+
+The `quints-ui/style.css` import is required — component styles and design tokens ship as a separate stylesheet, not inlined into the JS.
+
 ## Components
 
 - **General**: Button, Badge, Alert, Card
