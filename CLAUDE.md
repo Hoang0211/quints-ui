@@ -31,7 +31,8 @@ This is an ongoing, expandable library, not a fixed six-component set — new co
 - `vitest-axe` (v0.1.0) has broken TypeScript types for its `toHaveNoViolations()` matcher against the current Vitest version. Assert `(await axe(container)).violations` has length 0 instead of using the matcher.
 - `@testing-library/jest-dom` is wired via the `@testing-library/jest-dom/vitest` subpath import in `src/test/setup.ts`.
 - A file outside `src/` needing a `*.css` side-effect import (e.g. `.storybook/preview.tsx`) must be added to `tsconfig.json`'s `include` — the ambient `declare module "*.css"` (`src/css.d.ts`) only applies within the same TS program.
-- jsdom doesn't implement several browser APIs that Radix-based components rely on: `ResizeObserver` (Popover/Select positioning), and `hasPointerCapture`/`setPointerCapture`/`releasePointerCapture`/`scrollIntoView` (Select's trigger and viewport). Stub whichever ones a component's tests actually hit directly in that component's own test file (see `DateTime.test.tsx`/`Select.test.tsx`), not in the shared `src/test/setup.ts`.
+- jsdom doesn't implement several browser APIs that Radix-based components rely on: `ResizeObserver` (Popover/Select/Tooltip positioning), and `hasPointerCapture`/`setPointerCapture`/`releasePointerCapture`/`scrollIntoView` (Select's trigger and viewport). Stub whichever ones a component's tests actually hit directly in that component's own test file (see `DateTime.test.tsx`/`Select.test.tsx`), not in the shared `src/test/setup.ts`.
+- `Tooltip`'s close-on-unhover relies on Radix's "grace area" polygon between trigger and content, computed from real pointer coordinates/layout — jsdom has neither, so `userEvent.unhover()` never actually closes it in tests. Don't chase this; test open-on-hover, open-on-focus, controlled `open`, and `side`/`align` instead (see `Tooltip.test.tsx`), and skip asserting the close-on-unhover path.
 
 ## Workflow
 

@@ -1,0 +1,32 @@
+.q-tooltip {
+  max-width: 16rem;
+  padding: var(--q-space-xs) var(--q-space-sm);
+  border-radius: var(--q-radius-sm);
+  background-color: var(--q-color-text);
+  color: var(--q-color-bg);
+  font-family: var(--q-font-family-base);
+  font-size: var(--q-font-size-sm);
+  line-height: var(--q-line-height-base);
+  box-shadow: var(--q-shadow-md);
+  will-change: transform, opacity;
+}
+
+.q-tooltip[data-state="delayed-open"],
+.q-tooltip[data-state="instant-open"] {
+  animation: q-tooltip-in var(--q-duration-fast) var(--q-easing-standard);
+}
+
+@keyframes q-tooltip-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.q-tooltip__arrow {
+  fill: var(--q-color-text);
+}

@@ -82,3 +82,6 @@ export type {
   TabsTriggerProps,
   TabsContentProps,
 } from "./components/tabs/Tabs";
+
+export { Tooltip } from "./components/tooltip/Tooltip";
+export type { TooltipProps, TooltipSide, TooltipAlign } from "./components/tooltip/Tooltip";
