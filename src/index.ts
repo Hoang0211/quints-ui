@@ -85,3 +85,11 @@ export type {
 
 export { Tooltip } from "./components/tooltip/Tooltip";
 export type { TooltipProps, TooltipSide, TooltipAlign } from "./components/tooltip/Tooltip";
+
+export { Accordion } from "./components/accordion/Accordion";
+export type {
+  AccordionProps,
+  AccordionItemProps,
+  AccordionTriggerProps,
+  AccordionContentProps,
+} from "./components/accordion/Accordion";
