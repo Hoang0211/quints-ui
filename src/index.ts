@@ -93,3 +93,16 @@ export type {
   AccordionTriggerProps,
   AccordionContentProps,
 } from "./components/accordion/Accordion";
+
+export { Dropdown } from "./components/dropdown/Dropdown";
+export type {
+  DropdownProps,
+  DropdownSize,
+  DropdownSide,
+  DropdownAlign,
+  DropdownTriggerProps,
+  DropdownContentProps,
+  DropdownItemProps,
+  DropdownLabelProps,
+  DropdownSeparatorProps,
+} from "./components/dropdown/Dropdown";
