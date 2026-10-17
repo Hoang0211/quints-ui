@@ -11,7 +11,7 @@ export interface AlertProps extends HTMLAttributes<HTMLDivElement> {
   onDismiss?: () => void;
 }
 
-const DEFAULT_ICONS: Record<AlertVariant, ReactNode> = {
+export const DEFAULT_ICONS: Record<AlertVariant, ReactNode> = {
   success: (
     <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
       <circle cx="8" cy="8" r="7" fill="none" stroke="currentColor" strokeWidth="1.5" />
