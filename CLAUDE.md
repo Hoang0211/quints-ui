@@ -17,6 +17,8 @@ Established API pattern: `variant`/`size` props, `forwardRef` to the underlying 
 
 Compound components (`Card`, `RadioGroup`, `Select`, `Dialog`, `Tabs`) attach their named sub-components onto the root export via `Object.assign(Root, { Sub: SubComponent, ... })` — e.g. `Dialog.Content`, `Tabs.Trigger`. For a component wrapping a Radix primitive, sub-components typically wrap the matching Radix piece (`ComponentPropsWithoutRef`/`ComponentRef` off `typeof RadixPrimitive.X`) rather than being fully hand-rolled.
 
+Shared internal SVG icons live in `src/icons/` (e.g. `CloseIcon`, `STATUS_ICONS`), outside `src/components/` and not re-exported from `src/index.ts`. Reuse or add an icon there instead of copying SVG markup into a component, and never import internals from another component's file.
+
 ## Design Tokens
 
 Brand colors (primary/secondary/accent) each have base/`-hover`/`-active`/`-contrast` variants. Status colors (success/warning/alert/info) all have base/`-contrast` pairs — `-contrast` (always white) is needed by any solid-fill-plus-text usage (e.g. `Badge`) to pass WCAG contrast, so add it for a color as soon as such a usage exists. Only `alert` additionally has `-hover`, since that's the only status color a component (`Button`) currently uses as an interactive/hoverable surface — add `-hover` to the others only once a component actually needs it.

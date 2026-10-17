@@ -5,6 +5,7 @@ import {
   type HTMLAttributes,
 } from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
+import { CloseIcon } from "../../icons/CloseIcon";
 import "./Dialog.css";
 
 export type DialogProps = ComponentPropsWithoutRef<typeof DialogPrimitive.Root>;
@@ -30,14 +31,7 @@ const DialogContent = forwardRef<ComponentRef<typeof DialogPrimitive.Content>, D
           {children}
           {showCloseButton && (
             <DialogPrimitive.Close className="q-dialog__close" aria-label="Close">
-              <svg viewBox="0 0 12 12" aria-hidden="true" focusable="false">
-                <path
-                  d="M1 1L11 11M11 1L1 11"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-              </svg>
+              <CloseIcon />
             </DialogPrimitive.Close>
           )}
         </DialogPrimitive.Content>
