@@ -1,4 +1,5 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
+import { CloseIcon } from "../../icons/CloseIcon";
 import "./Badge.css";
 
 export type BadgeVariant =
@@ -32,19 +33,7 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
             onClick={onRemove}
             aria-label={typeof children === "string" ? `Remove ${children}` : "Remove"}
           >
-            <svg
-              className="q-badge__remove-icon"
-              viewBox="0 0 12 12"
-              aria-hidden="true"
-              focusable="false"
-            >
-              <path
-                d="M1 1L11 11M11 1L1 11"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-            </svg>
+            <CloseIcon className="q-badge__remove-icon" />
           </button>
         )}
       </span>

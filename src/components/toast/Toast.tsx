@@ -8,7 +8,8 @@ import {
   type ReactNode,
 } from "react";
 import * as ToastPrimitive from "@radix-ui/react-toast";
-import { DEFAULT_ICONS } from "../alert/Alert";
+import { CloseIcon } from "../../icons/CloseIcon";
+import { STATUS_ICONS } from "../../icons/StatusIcons";
 import "./Toast.css";
 
 export type ToastVariant = "neutral" | "success" | "warning" | "alert" | "info";
@@ -35,7 +36,7 @@ export interface ToastProps extends ComponentPropsWithoutRef<typeof ToastPrimiti
 const ToastRoot = forwardRef<ComponentRef<typeof ToastPrimitive.Root>, ToastProps>(
   ({ variant = "neutral", icon, showCloseButton = true, className, children, ...rest }, ref) => {
     const classes = ["q-toast", `q-toast--${variant}`, className].filter(Boolean).join(" ");
-    const resolvedIcon = icon ?? (variant === "neutral" ? null : DEFAULT_ICONS[variant]);
+    const resolvedIcon = icon ?? (variant === "neutral" ? null : STATUS_ICONS[variant]);
 
     return (
       <ToastPrimitive.Root ref={ref} className={classes} {...rest}>
@@ -47,14 +48,7 @@ const ToastRoot = forwardRef<ComponentRef<typeof ToastPrimitive.Root>, ToastProp
         <div className="q-toast__content">{children}</div>
         {showCloseButton && (
           <ToastPrimitive.Close className="q-toast__close" aria-label="Close">
-            <svg viewBox="0 0 12 12" aria-hidden="true" focusable="false">
-              <path
-                d="M1 1L11 11M11 1L1 11"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-            </svg>
+            <CloseIcon />
           </ToastPrimitive.Close>
         )}
       </ToastPrimitive.Root>
