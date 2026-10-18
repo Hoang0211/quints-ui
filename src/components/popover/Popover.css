@@ -1,0 +1,99 @@
+.q-popover__content {
+  position: relative;
+  box-sizing: border-box;
+  max-width: min(20rem, var(--radix-popover-content-available-width));
+  padding: var(--q-space-md);
+  border-radius: var(--q-radius-md);
+  border: 1px solid var(--q-color-border);
+  background-color: var(--q-color-bg);
+  box-shadow: var(--q-shadow-md);
+  font-family: var(--q-font-family-base);
+  font-size: var(--q-font-size-sm);
+  line-height: var(--q-line-height-base);
+  color: var(--q-color-text);
+  will-change: transform, opacity;
+}
+
+.q-popover__content[data-state="open"] {
+  animation: q-popover-in var(--q-duration-fast) var(--q-easing-standard);
+}
+
+.q-popover__content:focus-visible {
+  outline: none;
+}
+
+@keyframes q-popover-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .q-popover__content[data-state="open"] {
+    animation: none;
+  }
+}
+
+.q-popover__content--closable {
+  padding-right: calc(var(--q-space-md) + 1.75rem);
+}
+
+.q-popover__title {
+  margin: 0;
+  font-size: var(--q-font-size-md);
+  font-weight: var(--q-font-weight-bold);
+}
+
+.q-popover__description {
+  margin: 0;
+  color: var(--q-color-text-muted);
+}
+
+.q-popover__title + .q-popover__description {
+  margin-top: var(--q-space-xs);
+}
+
+.q-popover__close {
+  all: unset;
+  position: absolute;
+  top: var(--q-space-sm);
+  right: var(--q-space-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: var(--q-radius-sm);
+  color: var(--q-color-text-muted);
+  cursor: pointer;
+}
+
+.q-popover__close:hover {
+  background-color: var(--q-color-surface);
+  color: var(--q-color-text);
+}
+
+.q-popover__close:focus-visible {
+  outline: 2px solid var(--q-color-primary);
+  outline-offset: 2px;
+}
+
+.q-popover__close svg {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+/* Radix rotates the arrow per side, so in its own frame the tip always points
+   away from the content. The 1px nudge overlaps the content's border so the
+   fill hides it at the arrow's base, and the drop-shadow draws the border
+   color along the two outer edges. */
+.q-popover__arrow {
+  fill: var(--q-color-bg);
+  transform: translateY(-1px);
+  filter: drop-shadow(0 1px 0 var(--q-color-border));
+}
