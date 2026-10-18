@@ -107,6 +107,18 @@ export type {
   DropdownSeparatorProps,
 } from "./components/dropdown/Dropdown";
 
+export { Popover } from "./components/popover/Popover";
+export type {
+  PopoverProps,
+  PopoverSide,
+  PopoverAlign,
+  PopoverTriggerProps,
+  PopoverContentProps,
+  PopoverTitleProps,
+  PopoverDescriptionProps,
+  PopoverCloseProps,
+} from "./components/popover/Popover";
+
 export { Toast, Toaster, useToast } from "./components/toast/Toast";
 export type {
   ToastProps,
