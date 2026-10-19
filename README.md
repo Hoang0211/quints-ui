@@ -23,7 +23,7 @@ The `quints-ui/style.css` import is required — component styles and design tok
 
 ## Components
 
-- **General**: Button, Badge, Alert, Card
+- **General**: Button, Badge, Alert, Card, Skeleton
 - **Forms**: TextField, Textarea, Checkbox, RadioGroup, Toggle, Select, DateTime
 - **Overlay & navigation**: Dialog, Tabs, Tooltip, Accordion, Dropdown, Popover, Toast
 

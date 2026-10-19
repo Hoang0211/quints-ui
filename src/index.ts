@@ -119,6 +119,13 @@ export type {
   PopoverCloseProps,
 } from "./components/popover/Popover";
 
+export { Skeleton } from "./components/skeleton/Skeleton";
+export type {
+  SkeletonProps,
+  SkeletonVariant,
+  SkeletonAnimation,
+} from "./components/skeleton/Skeleton";
+
 export { Toast, Toaster, useToast } from "./components/toast/Toast";
 export type {
   ToastProps,
