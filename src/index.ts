@@ -107,6 +107,16 @@ export type {
   DropdownSeparatorProps,
 } from "./components/dropdown/Dropdown";
 
+export { Breadcrumb } from "./components/breadcrumb/Breadcrumb";
+export type {
+  BreadcrumbProps,
+  BreadcrumbSize,
+  BreadcrumbItemProps,
+  BreadcrumbLinkProps,
+  BreadcrumbPageProps,
+  BreadcrumbEllipsisProps,
+} from "./components/breadcrumb/Breadcrumb";
+
 export { Popover } from "./components/popover/Popover";
 export type {
   PopoverProps,
