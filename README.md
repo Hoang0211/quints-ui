@@ -25,7 +25,7 @@ The `quints-ui/style.css` import is required — component styles and design tok
 
 - **General**: Button, Badge, Alert, Card, Skeleton
 - **Forms**: TextField, Textarea, Checkbox, RadioGroup, Toggle, Select, DateTime
-- **Overlay & navigation**: Dialog, Tabs, Tooltip, Accordion, Dropdown, Popover, Toast
+- **Overlay & navigation**: Dialog, Tabs, Tooltip, Accordion, Dropdown, Popover, Toast, Breadcrumb
 
 ## Stack
 
