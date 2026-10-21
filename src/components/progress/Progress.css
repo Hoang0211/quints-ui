@@ -1,0 +1,186 @@
+.q-progress {
+  --q-progress-color: var(--q-color-primary);
+  font-family: var(--q-font-family-base);
+  font-size: var(--q-font-size-sm);
+  line-height: var(--q-line-height-base);
+  color: var(--q-color-text);
+}
+
+.q-progress--primary {
+  --q-progress-color: var(--q-color-primary);
+}
+.q-progress--success {
+  --q-progress-color: var(--q-color-success);
+}
+.q-progress--warning {
+  --q-progress-color: var(--q-color-warning);
+}
+.q-progress--alert {
+  --q-progress-color: var(--q-color-alert);
+}
+.q-progress--info {
+  --q-progress-color: var(--q-color-info);
+}
+
+.q-progress__label {
+  font-weight: var(--q-font-weight-medium);
+}
+
+.q-progress__value {
+  color: var(--q-color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Linear */
+
+.q-progress--linear {
+  display: flex;
+  flex-direction: column;
+  gap: var(--q-space-xs);
+  width: 100%;
+}
+
+.q-progress__header {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--q-space-sm);
+}
+
+.q-progress__track {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: var(--q-radius-full);
+  background-color: var(--q-color-border);
+}
+
+.q-progress--sm .q-progress__track {
+  height: 0.25rem;
+}
+.q-progress--md .q-progress__track {
+  height: 0.5rem;
+}
+.q-progress--lg .q-progress__track {
+  height: 0.75rem;
+}
+
+.q-progress__fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background-color: var(--q-progress-color);
+  transition: width var(--q-duration-base) var(--q-easing-standard);
+}
+
+.q-progress--linear.q-progress--indeterminate .q-progress__fill {
+  width: 40%;
+  animation: q-progress-slide 1.5s var(--q-easing-standard) infinite;
+}
+
+@keyframes q-progress-slide {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(250%);
+  }
+}
+
+/* Circular */
+
+.q-progress--circular {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--q-space-xs);
+}
+
+.q-progress--sm.q-progress--circular {
+  --q-progress-ring-size: 2.5rem;
+}
+.q-progress--md.q-progress--circular {
+  --q-progress-ring-size: 3.5rem;
+}
+.q-progress--lg.q-progress--circular {
+  --q-progress-ring-size: 5rem;
+}
+
+.q-progress__ring {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--q-progress-ring-size);
+  height: var(--q-progress-ring-size);
+}
+
+.q-progress__svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  /* Start the arc at 12 o'clock instead of 3 o'clock. */
+  transform: rotate(-90deg);
+}
+
+.q-progress__ring-track,
+.q-progress__ring-fill {
+  fill: none;
+  stroke-width: 3.5;
+}
+
+.q-progress__ring-track {
+  stroke: var(--q-color-border);
+}
+
+.q-progress__ring-fill {
+  stroke: var(--q-progress-color);
+  stroke-linecap: round;
+  transition: stroke-dashoffset var(--q-duration-base) var(--q-easing-standard);
+}
+
+.q-progress--circular .q-progress__value {
+  position: relative;
+  font-size: calc(var(--q-progress-ring-size) * 0.25);
+  color: var(--q-color-text);
+}
+
+.q-progress--circular.q-progress--indeterminate .q-progress__svg {
+  animation: q-progress-spin 1s linear infinite;
+}
+
+@keyframes q-progress-spin {
+  from {
+    transform: rotate(-90deg);
+  }
+  to {
+    transform: rotate(270deg);
+  }
+}
+
+/* Keep indeterminate visibly "working" without movement. */
+@media (prefers-reduced-motion: reduce) {
+  .q-progress__fill,
+  .q-progress__ring-fill {
+    transition: none;
+  }
+
+  .q-progress--linear.q-progress--indeterminate .q-progress__fill {
+    width: 100%;
+    animation: q-progress-pulse 2s ease-in-out infinite;
+  }
+
+  .q-progress--circular.q-progress--indeterminate .q-progress__svg {
+    animation: q-progress-pulse 2s ease-in-out infinite;
+  }
+}
+
+@keyframes q-progress-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}

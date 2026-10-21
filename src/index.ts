@@ -129,6 +129,14 @@ export type {
   PopoverCloseProps,
 } from "./components/popover/Popover";
 
+export { Progress } from "./components/progress/Progress";
+export type {
+  ProgressProps,
+  ProgressVariant,
+  ProgressSize,
+  ProgressShape,
+} from "./components/progress/Progress";
+
 export { Skeleton } from "./components/skeleton/Skeleton";
 export type {
   SkeletonProps,
