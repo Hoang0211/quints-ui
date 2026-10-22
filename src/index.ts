@@ -107,6 +107,9 @@ export type {
   DropdownSeparatorProps,
 } from "./components/dropdown/Dropdown";
 
+export { Avatar } from "./components/avatar/Avatar";
+export type { AvatarProps, AvatarSize, AvatarShape } from "./components/avatar/Avatar";
+
 export { Breadcrumb } from "./components/breadcrumb/Breadcrumb";
 export type {
   BreadcrumbProps,

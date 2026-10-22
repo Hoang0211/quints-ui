@@ -1,0 +1,69 @@
+.q-avatar {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--q-avatar-size);
+  height: var(--q-avatar-size);
+  overflow: hidden;
+  background-color: var(--q-color-border);
+  color: var(--q-color-text);
+  font-family: var(--q-font-family-base);
+  font-size: calc(var(--q-avatar-size) * 0.4);
+  font-weight: var(--q-font-weight-medium);
+  line-height: 1;
+  user-select: none;
+  vertical-align: middle;
+}
+
+.q-avatar--sm {
+  --q-avatar-size: 2rem;
+}
+.q-avatar--md {
+  --q-avatar-size: 2.5rem;
+}
+.q-avatar--lg {
+  --q-avatar-size: 3.5rem;
+}
+
+.q-avatar--circle {
+  border-radius: var(--q-radius-full);
+}
+.q-avatar--square {
+  border-radius: var(--q-radius-md);
+}
+
+/* Stacked over the fallback and revealed once loaded, so there's no layout
+   shift and no broken-image icon while it loads. */
+.q-avatar__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity var(--q-duration-base) var(--q-easing-standard);
+}
+
+.q-avatar__image--loaded {
+  opacity: 1;
+}
+
+.q-avatar__fallback {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.q-avatar__icon {
+  width: 1.5em;
+  height: 1.5em;
+  color: var(--q-color-text-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .q-avatar__image {
+    transition: none;
+  }
+}
