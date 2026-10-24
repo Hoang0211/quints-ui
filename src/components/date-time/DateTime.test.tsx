@@ -67,6 +67,39 @@ describe("DateTime", () => {
     expect(screen.getByText("January 20, 2026")).toBeInTheDocument();
   });
 
+  it("does not skip a shorter month when navigating forward from the 31st", async () => {
+    const user = userEvent.setup();
+    render(<DateTime label="Start date" defaultValue={new Date(2026, 0, 31)} />);
+
+    await user.click(screen.getByRole("button", { name: /start date/i }));
+    await user.click(screen.getByRole("button", { name: "Next month" }));
+
+    expect(screen.getByRole("grid", { name: "February 2026" })).toBeInTheDocument();
+  });
+
+  it("moves to a shorter month when navigating back from the 31st", async () => {
+    const user = userEvent.setup();
+    render(<DateTime label="Start date" defaultValue={new Date(2026, 2, 31)} />);
+
+    await user.click(screen.getByRole("button", { name: /start date/i }));
+    await user.click(screen.getByRole("button", { name: "Previous month" }));
+
+    expect(screen.getByRole("grid", { name: "February 2026" })).toBeInTheDocument();
+  });
+
+  it("clamps the focused day to the last day of a shorter month on PageDown", async () => {
+    const user = userEvent.setup();
+    render(<DateTime label="Start date" defaultValue={new Date(2026, 0, 31)} />);
+
+    await user.click(screen.getByRole("button", { name: /start date/i }));
+    const grid = screen.getByRole("grid");
+    within(grid).getByRole("gridcell", { name: "January 31, 2026" }).focus();
+    await user.keyboard("{PageDown}");
+
+    expect(screen.getByRole("grid", { name: "February 2026" })).toBeInTheDocument();
+    expect(screen.getByRole("gridcell", { name: "February 28, 2026" })).toHaveFocus();
+  });
+
   it("shows the error message instead of helper text and marks the trigger invalid", () => {
     render(
       <DateTime

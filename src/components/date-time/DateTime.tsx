@@ -29,9 +29,12 @@ function addDays(date: Date, amount: number): Date {
   return next;
 }
 
+// Clamps the day to the target month's length — a bare setMonth() overflows (Jan 31 + 1 → Mar 3),
+// which skips short months going forward and gets stuck on the same month going back.
 function addMonths(date: Date, amount: number): Date {
-  const next = new Date(date);
-  next.setMonth(next.getMonth() + amount);
+  const next = new Date(date.getFullYear(), date.getMonth() + amount, 1);
+  const lastDayOfMonth = new Date(next.getFullYear(), next.getMonth() + 1, 0).getDate();
+  next.setDate(Math.min(date.getDate(), lastDayOfMonth));
   return next;
 }
 
