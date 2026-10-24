@@ -3,7 +3,7 @@ import { Button } from "../button/Button";
 import { Popover } from "./Popover";
 
 const meta = {
-  title: "Components/Popover",
+  title: "Components/Overlays/Popover",
   component: Popover,
 } satisfies Meta<typeof Popover>;
 

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { DateTime } from "./DateTime";
 
 const meta = {
-  title: "Components/DateTime",
+  title: "Components/Inputs/DateTime",
   component: DateTime,
   tags: ["autodocs"],
 } satisfies Meta<typeof DateTime>;
