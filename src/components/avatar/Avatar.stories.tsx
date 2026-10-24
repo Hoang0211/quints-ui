@@ -5,7 +5,7 @@ import { Avatar } from "./Avatar";
 const PHOTO = "https://i.pravatar.cc/160?img=47";
 
 const meta = {
-  title: "Components/Avatar",
+  title: "Components/Data Display/Avatar",
   component: Avatar,
   tags: ["autodocs"],
   argTypes: {

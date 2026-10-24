@@ -3,7 +3,7 @@ import { Button } from "../button/Button";
 import { Dialog } from "./Dialog";
 
 const meta = {
-  title: "Components/Dialog",
+  title: "Components/Overlays/Dialog",
   component: Dialog,
 } satisfies Meta<typeof Dialog>;
 
