@@ -1,0 +1,126 @@
+.q-table__wrapper {
+  width: 100%;
+  overflow: auto;
+}
+
+/* Only focusable when height-capped (`maxHeight`), so keyboard users can scroll it. */
+.q-table__wrapper:focus-visible {
+  outline: 2px solid var(--q-color-primary);
+  outline-offset: 2px;
+}
+
+/* `separate` (not `collapse`) so cell borders stay attached to sticky header cells while scrolling. */
+.q-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: var(--q-font-family-base);
+  line-height: var(--q-line-height-base);
+  color: var(--q-color-text);
+}
+
+.q-table__caption {
+  caption-side: top;
+  text-align: start;
+  padding-bottom: var(--q-space-sm);
+  color: var(--q-color-text-muted);
+  font-size: var(--q-font-size-sm);
+}
+
+.q-table__head,
+.q-table__cell {
+  text-align: start;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--q-color-border);
+}
+
+.q-table__head {
+  background-color: var(--q-color-bg);
+  color: var(--q-color-text-muted);
+  font-weight: var(--q-font-weight-medium);
+}
+
+.q-table__body .q-table__row:last-child > .q-table__cell {
+  border-bottom: none;
+}
+
+.q-table__footer .q-table__cell {
+  border-top: 1px solid var(--q-color-border);
+  border-bottom: none;
+  font-weight: var(--q-font-weight-medium);
+}
+
+.q-table--sm .q-table__head,
+.q-table--sm .q-table__cell {
+  font-size: var(--q-font-size-sm);
+  padding: var(--q-space-xs) var(--q-space-sm);
+}
+
+.q-table--md .q-table__head,
+.q-table--md .q-table__cell {
+  font-size: var(--q-font-size-md);
+  padding: var(--q-space-sm) var(--q-space-md);
+}
+
+.q-table--lg .q-table__head,
+.q-table--lg .q-table__cell {
+  font-size: var(--q-font-size-md);
+  padding: var(--q-space-md) var(--q-space-lg);
+}
+
+.q-table__sort-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--q-space-xs);
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border-radius: var(--q-radius-sm);
+}
+
+.q-table__sort-button:hover {
+  color: var(--q-color-text);
+}
+
+.q-table__sort-button:focus-visible {
+  outline: 2px solid var(--q-color-primary);
+  outline-offset: 2px;
+}
+
+.q-table__sort-icon {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+}
+
+.q-table--striped .q-table__body .q-table__row:nth-child(even) {
+  background-color: var(--q-color-surface);
+}
+
+.q-table--bordered {
+  border: 1px solid var(--q-color-border);
+  border-radius: var(--q-radius-md);
+}
+
+.q-table--bordered .q-table__head:not(:last-child),
+.q-table--bordered .q-table__cell:not(:last-child) {
+  border-right: 1px solid var(--q-color-border);
+}
+
+/* Declared after `striped` so the hover highlight wins on even rows. */
+.q-table--hoverable .q-table__body .q-table__row {
+  transition: background-color var(--q-duration-fast) var(--q-easing-standard);
+}
+
+.q-table--hoverable .q-table__body .q-table__row:hover {
+  background-color: var(--q-color-border);
+}
+
+.q-table--sticky-header .q-table__header .q-table__head {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
