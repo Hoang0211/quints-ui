@@ -147,6 +147,21 @@ export type {
   SkeletonAnimation,
 } from "./components/skeleton/Skeleton";
 
+export { Table } from "./components/table/Table";
+export type {
+  TableProps,
+  TableVariant,
+  TableSize,
+  TableSortDirection,
+  TableCaptionProps,
+  TableHeaderProps,
+  TableBodyProps,
+  TableFooterProps,
+  TableRowProps,
+  TableHeadProps,
+  TableCellProps,
+} from "./components/table/Table";
+
 export { Toast, Toaster, useToast } from "./components/toast/Toast";
 export type {
   ToastProps,
