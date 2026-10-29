@@ -1,6 +1,7 @@
 import { forwardRef, useCallback, useState, type HTMLAttributes, type ReactNode } from "react";
 import { UserIcon } from "../../icons/UserIcon";
 import { cx } from "../../utils/cx";
+import { getInitials } from "./Avatar.utils";
 import "./Avatar.css";
 
 export type AvatarSize = "sm" | "md" | "lg";
@@ -14,14 +15,6 @@ export interface AvatarProps extends HTMLAttributes<HTMLSpanElement> {
   fallback?: ReactNode;
   size?: AvatarSize;
   shape?: AvatarShape;
-}
-
-function getInitials(name: string) {
-  const words = name.trim().split(/\s+/).filter(Boolean);
-  if (words.length === 0) return "";
-  const first = [...words[0]][0] ?? "";
-  const last = words.length > 1 ? ([...words[words.length - 1]][0] ?? "") : "";
-  return (first + last).toUpperCase();
 }
 
 export const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(
