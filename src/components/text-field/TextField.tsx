@@ -1,4 +1,5 @@
 import { forwardRef, useId, type InputHTMLAttributes, type ReactNode } from "react";
+import { cx } from "../../utils/cx";
 import "./TextField.css";
 
 export type TextFieldVariant = "outline" | "filled";
@@ -40,7 +41,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
     const helperId = `${inputId}-helper`;
     const helperContent = error && errorMessage ? errorMessage : helperText;
 
-    const wrapperClasses = [
+    const wrapperClasses = cx(
       "q-text-field",
       `q-text-field--${variant}`,
       `q-text-field--${size}`,
@@ -48,13 +49,9 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       fullWidth && "q-text-field--full-width",
       disabled && "q-text-field--disabled",
       className,
-    ]
-      .filter(Boolean)
-      .join(" ");
+    );
 
-    const helperClasses = ["q-text-field__helper", error && "q-text-field__helper--error"]
-      .filter(Boolean)
-      .join(" ");
+    const helperClasses = cx("q-text-field__helper", error && "q-text-field__helper--error");
 
     return (
       <div className={wrapperClasses}>

@@ -1,5 +1,6 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
 import { CloseIcon } from "../../icons/CloseIcon";
+import { cx } from "../../utils/cx";
 import "./Badge.css";
 
 export type BadgeVariant =
@@ -16,7 +17,7 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
     { variant = "neutral", icon, removable = false, onRemove, className, children, ...rest },
     ref,
   ) => {
-    const classes = ["q-badge", `q-badge--${variant}`, className].filter(Boolean).join(" ");
+    const classes = cx("q-badge", `q-badge--${variant}`, className);
 
     return (
       <span ref={ref} className={classes} {...rest}>

@@ -1,4 +1,5 @@
 import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from "react";
+import { cx } from "../../utils/cx";
 import "./Button.css";
 
 export type ButtonVariant = "primary" | "secondary" | "neutral" | "alert";
@@ -30,16 +31,14 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref,
   ) => {
-    const classes = [
+    const classes = cx(
       "q-button",
       `q-button--${variant}`,
       `q-button--${size}`,
       fullWidth && "q-button--full-width",
       isLoading && "q-button--loading",
       className,
-    ]
-      .filter(Boolean)
-      .join(" ");
+    );
 
     return (
       <button

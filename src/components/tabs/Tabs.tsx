@@ -1,5 +1,6 @@
 import { forwardRef, type ComponentPropsWithoutRef, type ComponentRef } from "react";
 import * as TabsPrimitive from "@radix-ui/react-tabs";
+import { cx } from "../../utils/cx";
 import "./Tabs.css";
 
 export type TabsProps = ComponentPropsWithoutRef<typeof TabsPrimitive.Root>;
@@ -12,7 +13,7 @@ export interface TabsListProps extends ComponentPropsWithoutRef<typeof TabsPrimi
 
 const TabsList = forwardRef<ComponentRef<typeof TabsPrimitive.List>, TabsListProps>(
   ({ size = "md", className, ...rest }, ref) => {
-    const classes = ["q-tabs__list", `q-tabs__list--${size}`, className].filter(Boolean).join(" ");
+    const classes = cx("q-tabs__list", `q-tabs__list--${size}`, className);
     return <TabsPrimitive.List ref={ref} className={classes} {...rest} />;
   },
 );
@@ -23,7 +24,7 @@ export type TabsTriggerProps = ComponentPropsWithoutRef<typeof TabsPrimitive.Tri
 
 const TabsTrigger = forwardRef<ComponentRef<typeof TabsPrimitive.Trigger>, TabsTriggerProps>(
   ({ className, ...rest }, ref) => {
-    const classes = ["q-tabs__trigger", className].filter(Boolean).join(" ");
+    const classes = cx("q-tabs__trigger", className);
     return <TabsPrimitive.Trigger ref={ref} className={classes} {...rest} />;
   },
 );
@@ -34,7 +35,7 @@ export type TabsContentProps = ComponentPropsWithoutRef<typeof TabsPrimitive.Con
 
 const TabsContent = forwardRef<ComponentRef<typeof TabsPrimitive.Content>, TabsContentProps>(
   ({ className, ...rest }, ref) => {
-    const classes = ["q-tabs__content", className].filter(Boolean).join(" ");
+    const classes = cx("q-tabs__content", className);
     return <TabsPrimitive.Content ref={ref} className={classes} {...rest} />;
   },
 );

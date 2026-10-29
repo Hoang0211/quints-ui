@@ -1,5 +1,9 @@
 import { forwardRef, useId, type ComponentPropsWithoutRef, type ComponentRef } from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
+import { CheckIcon } from "../../icons/CheckIcon";
+import { ChevronDownIcon } from "../../icons/ChevronDownIcon";
+import { ChevronUpIcon } from "../../icons/ChevronUpIcon";
+import { cx } from "../../utils/cx";
 import "./Select.css";
 
 export type SelectSize = "sm" | "md";
@@ -39,22 +43,16 @@ const SelectRoot = forwardRef<ComponentRef<typeof SelectPrimitive.Trigger>, Sele
     const helperId = `${triggerId}-helper`;
     const helperContent = error && errorMessage ? errorMessage : helperText;
 
-    const wrapperClasses = [
+    const wrapperClasses = cx(
       "q-select",
       error && "q-select--error",
       fullWidth && "q-select--full-width",
       className,
-    ]
-      .filter(Boolean)
-      .join(" ");
+    );
 
-    const triggerClasses = ["q-select__trigger", `q-select__trigger--${size}`]
-      .filter(Boolean)
-      .join(" ");
+    const triggerClasses = cx("q-select__trigger", `q-select__trigger--${size}`);
 
-    const helperClasses = ["q-select__helper", error && "q-select__helper--error"]
-      .filter(Boolean)
-      .join(" ");
+    const helperClasses = cx("q-select__helper", error && "q-select__helper--error");
 
     return (
       <div className={wrapperClasses}>
@@ -73,46 +71,19 @@ const SelectRoot = forwardRef<ComponentRef<typeof SelectPrimitive.Trigger>, Sele
           >
             <SelectPrimitive.Value placeholder={placeholder} />
             <SelectPrimitive.Icon className="q-select__icon">
-              <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-                <path
-                  d="M4 6l4 4 4-4"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <ChevronDownIcon />
             </SelectPrimitive.Icon>
           </SelectPrimitive.Trigger>
           <SelectPrimitive.Portal>
             <SelectPrimitive.Content className="q-select__content" position="popper" sideOffset={4}>
               <SelectPrimitive.ScrollUpButton className="q-select__scroll-button">
-                <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-                  <path
-                    d="M4 10l4-4 4 4"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+                <ChevronUpIcon />
               </SelectPrimitive.ScrollUpButton>
               <SelectPrimitive.Viewport className="q-select__viewport">
                 {children}
               </SelectPrimitive.Viewport>
               <SelectPrimitive.ScrollDownButton className="q-select__scroll-button">
-                <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-                  <path
-                    d="M4 6l4 4 4-4"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+                <ChevronDownIcon />
               </SelectPrimitive.ScrollDownButton>
             </SelectPrimitive.Content>
           </SelectPrimitive.Portal>
@@ -133,21 +104,12 @@ export type SelectItemProps = ComponentPropsWithoutRef<typeof SelectPrimitive.It
 
 const SelectItem = forwardRef<ComponentRef<typeof SelectPrimitive.Item>, SelectItemProps>(
   ({ className, children, ...rest }, ref) => {
-    const classes = ["q-select__item", className].filter(Boolean).join(" ");
+    const classes = cx("q-select__item", className);
     return (
       <SelectPrimitive.Item ref={ref} className={classes} {...rest}>
         <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
         <SelectPrimitive.ItemIndicator className="q-select__item-indicator">
-          <svg viewBox="0 0 12 12" aria-hidden="true" focusable="false">
-            <path
-              d="M2.5 6.5l2.5 2.5 4.5-5.5"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          <CheckIcon />
         </SelectPrimitive.ItemIndicator>
       </SelectPrimitive.Item>
     );
@@ -160,7 +122,7 @@ export type SelectGroupProps = ComponentPropsWithoutRef<typeof SelectPrimitive.G
 
 const SelectGroup = forwardRef<ComponentRef<typeof SelectPrimitive.Group>, SelectGroupProps>(
   ({ className, ...rest }, ref) => {
-    const classes = ["q-select__group", className].filter(Boolean).join(" ");
+    const classes = cx("q-select__group", className);
     return <SelectPrimitive.Group ref={ref} className={classes} {...rest} />;
   },
 );
@@ -173,7 +135,7 @@ const SelectGroupLabel = forwardRef<
   ComponentRef<typeof SelectPrimitive.Label>,
   SelectGroupLabelProps
 >(({ className, ...rest }, ref) => {
-  const classes = ["q-select__group-label", className].filter(Boolean).join(" ");
+  const classes = cx("q-select__group-label", className);
   return <SelectPrimitive.Label ref={ref} className={classes} {...rest} />;
 });
 

@@ -13,6 +13,7 @@ import {
   type ThHTMLAttributes,
 } from "react";
 import { SortIcon } from "../../icons/SortIcon";
+import { cx } from "../../utils/cx";
 import "./Table.css";
 
 export type TableVariant = "plain" | "striped" | "bordered";
@@ -58,16 +59,14 @@ const TableRoot = forwardRef<HTMLTableElement, TableProps>(
     const captionContext = useMemo(() => ({ defaultCaptionId, setCaptionId }), [defaultCaptionId]);
     const scrollable = maxHeight !== undefined;
 
-    const classes = [
+    const classes = cx(
       "q-table",
       `q-table--${variant}`,
       `q-table--${size}`,
       hoverable && "q-table--hoverable",
       stickyHeader && "q-table--sticky-header",
       className,
-    ]
-      .filter(Boolean)
-      .join(" ");
+    );
 
     // The wrapper is the scroll container, so wide tables scroll horizontally
     // instead of overflowing the page, and sticky headers stick within it.
@@ -102,7 +101,7 @@ const TableCaption = forwardRef<HTMLTableCaptionElement, TableCaptionProps>(
       return () => setCaptionId(null);
     }, [setCaptionId, id]);
 
-    const classes = ["q-table__caption", className].filter(Boolean).join(" ");
+    const classes = cx("q-table__caption", className);
     return <caption ref={ref} id={id} className={classes} {...rest} />;
   },
 );
@@ -112,7 +111,7 @@ export type TableHeaderProps = HTMLAttributes<HTMLTableSectionElement>;
 
 const TableHeader = forwardRef<HTMLTableSectionElement, TableHeaderProps>(
   ({ className, ...rest }, ref) => {
-    const classes = ["q-table__header", className].filter(Boolean).join(" ");
+    const classes = cx("q-table__header", className);
     return <thead ref={ref} className={classes} {...rest} />;
   },
 );
@@ -122,7 +121,7 @@ export type TableBodyProps = HTMLAttributes<HTMLTableSectionElement>;
 
 const TableBody = forwardRef<HTMLTableSectionElement, TableBodyProps>(
   ({ className, ...rest }, ref) => {
-    const classes = ["q-table__body", className].filter(Boolean).join(" ");
+    const classes = cx("q-table__body", className);
     return <tbody ref={ref} className={classes} {...rest} />;
   },
 );
@@ -132,7 +131,7 @@ export type TableFooterProps = HTMLAttributes<HTMLTableSectionElement>;
 
 const TableFooter = forwardRef<HTMLTableSectionElement, TableFooterProps>(
   ({ className, ...rest }, ref) => {
-    const classes = ["q-table__footer", className].filter(Boolean).join(" ");
+    const classes = cx("q-table__footer", className);
     return <tfoot ref={ref} className={classes} {...rest} />;
   },
 );
@@ -141,7 +140,7 @@ TableFooter.displayName = "Table.Footer";
 export type TableRowProps = HTMLAttributes<HTMLTableRowElement>;
 
 const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(({ className, ...rest }, ref) => {
-  const classes = ["q-table__row", className].filter(Boolean).join(" ");
+  const classes = cx("q-table__row", className);
   return <tr ref={ref} className={classes} {...rest} />;
 });
 TableRow.displayName = "Table.Row";
@@ -158,9 +157,7 @@ const ARIA_SORT = { asc: "ascending", desc: "descending" } as const;
 const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
   ({ sortDirection = "none", onSort, scope = "col", className, children, ...rest }, ref) => {
     const sortable = onSort !== undefined;
-    const classes = ["q-table__head", sortable && "q-table__head--sortable", className]
-      .filter(Boolean)
-      .join(" ");
+    const classes = cx("q-table__head", sortable && "q-table__head--sortable", className);
 
     // Per the WAI-ARIA sortable table pattern, aria-sort is only set on the
     // column that is actually sorted.
@@ -186,7 +183,7 @@ export type TableCellProps = TdHTMLAttributes<HTMLTableCellElement>;
 
 const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(
   ({ className, ...rest }, ref) => {
-    const classes = ["q-table__cell", className].filter(Boolean).join(" ");
+    const classes = cx("q-table__cell", className);
     return <td ref={ref} className={classes} {...rest} />;
   },
 );

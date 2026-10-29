@@ -12,6 +12,7 @@ import {
 } from "react";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
 import { CloseIcon } from "../../icons/CloseIcon";
+import { cx } from "../../utils/cx";
 import "./Popover.css";
 
 export type PopoverSide = "top" | "right" | "bottom" | "left";
@@ -70,13 +71,11 @@ const PopoverContent = forwardRef<
       [titleId, descriptionId],
     );
 
-    const classes = [
+    const classes = cx(
       "q-popover__content",
       showCloseButton && "q-popover__content--closable",
       className,
-    ]
-      .filter(Boolean)
-      .join(" ");
+    );
 
     return (
       <PopoverPrimitive.Portal>
@@ -120,7 +119,7 @@ const PopoverTitle = forwardRef<HTMLHeadingElement, PopoverTitleProps>(
       return () => setHasTitle(false);
     }, [setHasTitle]);
 
-    const classes = ["q-popover__title", className].filter(Boolean).join(" ");
+    const classes = cx("q-popover__title", className);
     return <h2 ref={ref} className={classes} {...rest} id={labelContext?.titleId ?? rest.id} />;
   },
 );
@@ -140,7 +139,7 @@ const PopoverDescription = forwardRef<HTMLParagraphElement, PopoverDescriptionPr
       return () => setHasDescription(false);
     }, [setHasDescription]);
 
-    const classes = ["q-popover__description", className].filter(Boolean).join(" ");
+    const classes = cx("q-popover__description", className);
     return (
       <p ref={ref} className={classes} {...rest} id={labelContext?.descriptionId ?? rest.id} />
     );

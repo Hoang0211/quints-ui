@@ -8,6 +8,10 @@ import {
   type KeyboardEvent,
 } from "react";
 import * as Popover from "@radix-ui/react-popover";
+import { CalendarIcon } from "../../icons/CalendarIcon";
+import { ChevronLeftIcon } from "../../icons/ChevronLeftIcon";
+import { ChevronRightIcon } from "../../icons/ChevronRightIcon";
+import { cx } from "../../utils/cx";
 import "./DateTime.css";
 
 const WEEKDAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -165,20 +169,16 @@ export const DateTime = forwardRef<HTMLButtonElement, DateTimeProps>(
       }
     };
 
-    const wrapperClasses = [
+    const wrapperClasses = cx(
       "q-date-time",
       error && "q-date-time--error",
       fullWidth && "q-date-time--full-width",
       disabled && "q-date-time--disabled",
       className,
-    ]
-      .filter(Boolean)
-      .join(" ");
+    );
 
     const helperContent = error && errorMessage ? errorMessage : helperText;
-    const helperClasses = ["q-date-time__helper", error && "q-date-time__helper--error"]
-      .filter(Boolean)
-      .join(" ");
+    const helperClasses = cx("q-date-time__helper", error && "q-date-time__helper--error");
 
     const today = startOfDay(new Date());
     const weeks = buildCalendarWeeks(viewDate);
@@ -205,42 +205,7 @@ export const DateTime = forwardRef<HTMLButtonElement, DateTimeProps>(
               <span className="q-date-time__value">
                 {selectedDate ? dateFormatter.format(selectedDate) : placeholder}
               </span>
-              <svg
-                className="q-date-time__icon"
-                viewBox="0 0 16 16"
-                aria-hidden="true"
-                focusable="false"
-              >
-                <rect
-                  x="1.5"
-                  y="2.5"
-                  width="13"
-                  height="12"
-                  rx="1.5"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.3"
-                />
-                <line x1="1.5" y1="6" x2="14.5" y2="6" stroke="currentColor" strokeWidth="1.3" />
-                <line
-                  x1="4.5"
-                  y1="1"
-                  x2="4.5"
-                  y2="3.5"
-                  stroke="currentColor"
-                  strokeWidth="1.3"
-                  strokeLinecap="round"
-                />
-                <line
-                  x1="11.5"
-                  y1="1"
-                  x2="11.5"
-                  y2="3.5"
-                  stroke="currentColor"
-                  strokeWidth="1.3"
-                  strokeLinecap="round"
-                />
-              </svg>
+              <CalendarIcon className="q-date-time__icon" />
             </button>
           </Popover.Trigger>
           <Popover.Portal>
@@ -252,16 +217,7 @@ export const DateTime = forwardRef<HTMLButtonElement, DateTimeProps>(
                   aria-label="Previous month"
                   onClick={() => setViewDate((prev) => addMonths(prev, -1))}
                 >
-                  <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-                    <path
-                      d="M10 3l-5 5 5 5"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
+                  <ChevronLeftIcon />
                 </button>
                 <span className="q-date-time__month-label">{monthFormatter.format(viewDate)}</span>
                 <button
@@ -270,16 +226,7 @@ export const DateTime = forwardRef<HTMLButtonElement, DateTimeProps>(
                   aria-label="Next month"
                   onClick={() => setViewDate((prev) => addMonths(prev, 1))}
                 >
-                  <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-                    <path
-                      d="M6 3l5 5-5 5"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
+                  <ChevronRightIcon />
                 </button>
               </div>
               <div
@@ -298,14 +245,12 @@ export const DateTime = forwardRef<HTMLButtonElement, DateTimeProps>(
                 {weeks.map((week, weekIndex) => (
                   <div key={weekIndex} className="q-date-time__week" role="row">
                     {week.map((day) => {
-                      const dayClasses = [
+                      const dayClasses = cx(
                         "q-date-time__day",
                         day.getMonth() !== viewDate.getMonth() && "q-date-time__day--outside",
                         isSameDay(day, selectedDate ?? null) && "q-date-time__day--selected",
                         isSameDay(day, today) && "q-date-time__day--today",
-                      ]
-                        .filter(Boolean)
-                        .join(" ");
+                      );
 
                       return (
                         <button
