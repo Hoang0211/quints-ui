@@ -21,6 +21,8 @@ Compound components (`Card`, `RadioGroup`, `Select`, `Dialog`, `Tabs`) attach th
 
 Shared internal SVG icons live in `src/icons/` (e.g. `CloseIcon`, `STATUS_ICONS`), outside `src/components/` and not re-exported from `src/index.ts`. Reuse or add an icon there instead of copying SVG markup into a component, and never import internals from another component's file.
 
+Class names are built with the internal `cx()` helper in `src/utils/cx.ts` (also not re-exported from `src/index.ts`) instead of a hand-written `[...].filter(Boolean).join(" ")` — pass the consumer `className` as the last argument, e.g. ``cx("q-button", `q-button--${variant}`, className)``.
+
 ## Design Tokens
 
 Brand colors (primary/secondary/accent) each have base/`-hover`/`-active`/`-contrast` variants. Status colors (success/warning/alert/info) all have base/`-contrast` pairs — `-contrast` (always white) is needed by any solid-fill-plus-text usage (e.g. `Badge`) to pass WCAG contrast, so add it for a color as soon as such a usage exists. Only `alert` additionally has `-hover`, since that's the only status color a component (`Button`) currently uses as an interactive/hoverable surface — add `-hover` to the others only once a component actually needs it.
