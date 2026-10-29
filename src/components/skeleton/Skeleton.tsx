@@ -1,4 +1,5 @@
 import { forwardRef, type CSSProperties, type HTMLAttributes } from "react";
+import { cx } from "../../utils/cx";
 import "./Skeleton.css";
 
 export type SkeletonVariant = "text" | "rect" | "circle";
@@ -39,7 +40,7 @@ export const Skeleton = forwardRef<HTMLSpanElement, SkeletonProps>(
     // Skeletons are decorative placeholders, hidden from assistive tech. The
     // surrounding region should carry aria-busy while content loads.
     if (variant === "text" && lines > 1 && !hasChildren) {
-      const classes = ["q-skeleton__lines", className].filter(Boolean).join(" ");
+      const classes = cx("q-skeleton__lines", className);
       return (
         <span
           ref={ref}
@@ -55,9 +56,7 @@ export const Skeleton = forwardRef<HTMLSpanElement, SkeletonProps>(
       );
     }
 
-    const classes = [...shapeClasses, hasChildren && "q-skeleton--has-children", className]
-      .filter(Boolean)
-      .join(" ");
+    const classes = cx(...shapeClasses, hasChildren && "q-skeleton--has-children", className);
 
     return (
       <span

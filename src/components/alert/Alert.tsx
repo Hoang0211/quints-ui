@@ -1,6 +1,7 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
 import { CloseIcon } from "../../icons/CloseIcon";
 import { STATUS_ICONS } from "../../icons/StatusIcons";
+import { cx } from "../../utils/cx";
 import "./Alert.css";
 
 export type AlertVariant = "success" | "warning" | "alert" | "info";
@@ -18,7 +19,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
     { variant = "info", title, icon, dismissible = false, onDismiss, className, children, ...rest },
     ref,
   ) => {
-    const classes = ["q-alert", `q-alert--${variant}`, className].filter(Boolean).join(" ");
+    const classes = cx("q-alert", `q-alert--${variant}`, className);
     const resolvedIcon = icon ?? STATUS_ICONS[variant];
 
     return (

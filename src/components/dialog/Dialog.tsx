@@ -6,6 +6,7 @@ import {
 } from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { CloseIcon } from "../../icons/CloseIcon";
+import { cx } from "../../utils/cx";
 import "./Dialog.css";
 
 export type DialogProps = ComponentPropsWithoutRef<typeof DialogPrimitive.Root>;
@@ -22,7 +23,7 @@ export interface DialogContentProps extends ComponentPropsWithoutRef<
 
 const DialogContent = forwardRef<ComponentRef<typeof DialogPrimitive.Content>, DialogContentProps>(
   ({ className, children, showCloseButton = true, ...rest }, ref) => {
-    const classes = ["q-dialog__content", className].filter(Boolean).join(" ");
+    const classes = cx("q-dialog__content", className);
 
     return (
       <DialogPrimitive.Portal>
@@ -46,7 +47,7 @@ export type DialogHeaderProps = HTMLAttributes<HTMLDivElement>;
 
 const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
   ({ className, ...rest }, ref) => {
-    const classes = ["q-dialog__header", className].filter(Boolean).join(" ");
+    const classes = cx("q-dialog__header", className);
     return <div ref={ref} className={classes} {...rest} />;
   },
 );
@@ -57,7 +58,7 @@ export type DialogTitleProps = ComponentPropsWithoutRef<typeof DialogPrimitive.T
 
 const DialogTitle = forwardRef<ComponentRef<typeof DialogPrimitive.Title>, DialogTitleProps>(
   ({ className, ...rest }, ref) => {
-    const classes = ["q-dialog__title", className].filter(Boolean).join(" ");
+    const classes = cx("q-dialog__title", className);
     return <DialogPrimitive.Title ref={ref} className={classes} {...rest} />;
   },
 );
@@ -70,7 +71,7 @@ const DialogDescription = forwardRef<
   ComponentRef<typeof DialogPrimitive.Description>,
   DialogDescriptionProps
 >(({ className, ...rest }, ref) => {
-  const classes = ["q-dialog__description", className].filter(Boolean).join(" ");
+  const classes = cx("q-dialog__description", className);
   return <DialogPrimitive.Description ref={ref} className={classes} {...rest} />;
 });
 
@@ -79,7 +80,7 @@ DialogDescription.displayName = "Dialog.Description";
 export type DialogBodyProps = HTMLAttributes<HTMLDivElement>;
 
 const DialogBody = forwardRef<HTMLDivElement, DialogBodyProps>(({ className, ...rest }, ref) => {
-  const classes = ["q-dialog__body", className].filter(Boolean).join(" ");
+  const classes = cx("q-dialog__body", className);
   return <div ref={ref} className={classes} {...rest} />;
 });
 
@@ -89,7 +90,7 @@ export type DialogFooterProps = HTMLAttributes<HTMLDivElement>;
 
 const DialogFooter = forwardRef<HTMLDivElement, DialogFooterProps>(
   ({ className, ...rest }, ref) => {
-    const classes = ["q-dialog__footer", className].filter(Boolean).join(" ");
+    const classes = cx("q-dialog__footer", className);
     return <div ref={ref} className={classes} {...rest} />;
   },
 );

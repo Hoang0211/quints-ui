@@ -1,4 +1,5 @@
 import { forwardRef, useId, type HTMLAttributes } from "react";
+import { cx } from "../../utils/cx";
 import "./Progress.css";
 
 export type ProgressVariant = "primary" | "success" | "warning" | "alert" | "info";
@@ -39,16 +40,14 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
     const percent = max > 0 ? (clampedValue / max) * 100 : 0;
     const valueText = `${Math.round(percent)}%`;
 
-    const classes = [
+    const classes = cx(
       "q-progress",
       `q-progress--${shape}`,
       `q-progress--${variant}`,
       `q-progress--${size}`,
       isIndeterminate && "q-progress--indeterminate",
       className,
-    ]
-      .filter(Boolean)
-      .join(" ");
+    );
 
     const labelElement = label && (
       <span id={labelId} className="q-progress__label">

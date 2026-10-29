@@ -1,5 +1,6 @@
 import { forwardRef, useCallback, useState, type HTMLAttributes, type ReactNode } from "react";
 import { UserIcon } from "../../icons/UserIcon";
+import { cx } from "../../utils/cx";
 import "./Avatar.css";
 
 export type AvatarSize = "sm" | "md" | "lg";
@@ -40,9 +41,7 @@ export const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(
       }
     }, []);
 
-    const classes = ["q-avatar", `q-avatar--${size}`, `q-avatar--${shape}`, className]
-      .filter(Boolean)
-      .join(" ");
+    const classes = cx("q-avatar", `q-avatar--${size}`, `q-avatar--${shape}`, className);
 
     const initials = name ? getInitials(name) : "";
     const fallbackContent = fallback ?? (initials || <UserIcon className="q-avatar__icon" />);
@@ -59,9 +58,7 @@ export const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(
         {src && !hasFailed && (
           <img
             ref={imageRef}
-            className={["q-avatar__image", isLoaded && "q-avatar__image--loaded"]
-              .filter(Boolean)
-              .join(" ")}
+            className={cx("q-avatar__image", isLoaded && "q-avatar__image--loaded")}
             src={src}
             alt=""
             onLoad={() => setLoadedSrc(src)}

@@ -5,6 +5,7 @@ import {
   type ReactNode,
 } from "react";
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
+import { cx } from "../../utils/cx";
 import "./Dropdown.css";
 
 export type DropdownSize = "sm" | "md";
@@ -27,9 +28,7 @@ const DropdownContent = forwardRef<
   ComponentRef<typeof DropdownMenuPrimitive.Content>,
   DropdownContentProps
 >(({ size = "md", side = "bottom", align = "start", sideOffset = 4, className, ...rest }, ref) => {
-  const classes = ["q-dropdown__content", `q-dropdown__content--${size}`, className]
-    .filter(Boolean)
-    .join(" ");
+  const classes = cx("q-dropdown__content", `q-dropdown__content--${size}`, className);
 
   return (
     <DropdownMenuPrimitive.Portal>
@@ -56,7 +55,7 @@ export interface DropdownItemProps extends ComponentPropsWithoutRef<
 
 const DropdownItem = forwardRef<ComponentRef<typeof DropdownMenuPrimitive.Item>, DropdownItemProps>(
   ({ icon, shortcut, className, children, ...rest }, ref) => {
-    const classes = ["q-dropdown__item", className].filter(Boolean).join(" ");
+    const classes = cx("q-dropdown__item", className);
 
     return (
       <DropdownMenuPrimitive.Item ref={ref} className={classes} {...rest}>
@@ -84,7 +83,7 @@ const DropdownLabel = forwardRef<
   ComponentRef<typeof DropdownMenuPrimitive.Label>,
   DropdownLabelProps
 >(({ className, ...rest }, ref) => {
-  const classes = ["q-dropdown__label", className].filter(Boolean).join(" ");
+  const classes = cx("q-dropdown__label", className);
   return <DropdownMenuPrimitive.Label ref={ref} className={classes} {...rest} />;
 });
 
@@ -98,7 +97,7 @@ const DropdownSeparator = forwardRef<
   ComponentRef<typeof DropdownMenuPrimitive.Separator>,
   DropdownSeparatorProps
 >(({ className, ...rest }, ref) => {
-  const classes = ["q-dropdown__separator", className].filter(Boolean).join(" ");
+  const classes = cx("q-dropdown__separator", className);
   return <DropdownMenuPrimitive.Separator ref={ref} className={classes} {...rest} />;
 });
 

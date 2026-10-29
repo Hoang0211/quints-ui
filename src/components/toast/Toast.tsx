@@ -10,6 +10,7 @@ import {
 import * as ToastPrimitive from "@radix-ui/react-toast";
 import { CloseIcon } from "../../icons/CloseIcon";
 import { STATUS_ICONS } from "../../icons/StatusIcons";
+import { cx } from "../../utils/cx";
 import "./Toast.css";
 
 export type ToastVariant = "neutral" | "success" | "warning" | "alert" | "info";
@@ -20,7 +21,7 @@ export type ToastViewportProps = ComponentPropsWithoutRef<typeof ToastPrimitive.
 
 const ToastViewport = forwardRef<ComponentRef<typeof ToastPrimitive.Viewport>, ToastViewportProps>(
   ({ className, ...rest }, ref) => {
-    const classes = ["q-toast__viewport", className].filter(Boolean).join(" ");
+    const classes = cx("q-toast__viewport", className);
     return <ToastPrimitive.Viewport ref={ref} className={classes} {...rest} />;
   },
 );
@@ -35,7 +36,7 @@ export interface ToastProps extends ComponentPropsWithoutRef<typeof ToastPrimiti
 
 const ToastRoot = forwardRef<ComponentRef<typeof ToastPrimitive.Root>, ToastProps>(
   ({ variant = "neutral", icon, showCloseButton = true, className, children, ...rest }, ref) => {
-    const classes = ["q-toast", `q-toast--${variant}`, className].filter(Boolean).join(" ");
+    const classes = cx("q-toast", `q-toast--${variant}`, className);
     const resolvedIcon = icon ?? (variant === "neutral" ? null : STATUS_ICONS[variant]);
 
     return (
@@ -62,7 +63,7 @@ export type ToastTitleProps = ComponentPropsWithoutRef<typeof ToastPrimitive.Tit
 
 const ToastTitle = forwardRef<ComponentRef<typeof ToastPrimitive.Title>, ToastTitleProps>(
   ({ className, ...rest }, ref) => {
-    const classes = ["q-toast__title", className].filter(Boolean).join(" ");
+    const classes = cx("q-toast__title", className);
     return <ToastPrimitive.Title ref={ref} className={classes} {...rest} />;
   },
 );
@@ -75,7 +76,7 @@ const ToastDescription = forwardRef<
   ComponentRef<typeof ToastPrimitive.Description>,
   ToastDescriptionProps
 >(({ className, ...rest }, ref) => {
-  const classes = ["q-toast__description", className].filter(Boolean).join(" ");
+  const classes = cx("q-toast__description", className);
   return <ToastPrimitive.Description ref={ref} className={classes} {...rest} />;
 });
 
@@ -85,7 +86,7 @@ export type ToastActionProps = ComponentPropsWithoutRef<typeof ToastPrimitive.Ac
 
 const ToastAction = forwardRef<ComponentRef<typeof ToastPrimitive.Action>, ToastActionProps>(
   ({ className, ...rest }, ref) => {
-    const classes = ["q-toast__action", className].filter(Boolean).join(" ");
+    const classes = cx("q-toast__action", className);
     return <ToastPrimitive.Action ref={ref} className={classes} {...rest} />;
   },
 );

@@ -1,4 +1,5 @@
 import { forwardRef, useId, type TextareaHTMLAttributes } from "react";
+import { cx } from "../../utils/cx";
 import "./Textarea.css";
 
 export type TextareaVariant = "outline" | "filled";
@@ -39,7 +40,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     const helperId = `${textareaId}-helper`;
     const helperContent = error && errorMessage ? errorMessage : helperText;
 
-    const wrapperClasses = [
+    const wrapperClasses = cx(
       "q-textarea",
       `q-textarea--${variant}`,
       `q-textarea--${size}`,
@@ -47,17 +48,11 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       fullWidth && "q-textarea--full-width",
       disabled && "q-textarea--disabled",
       className,
-    ]
-      .filter(Boolean)
-      .join(" ");
+    );
 
-    const controlClasses = ["q-textarea__control", `q-textarea__control--${resize}`]
-      .filter(Boolean)
-      .join(" ");
+    const controlClasses = cx("q-textarea__control", `q-textarea__control--${resize}`);
 
-    const helperClasses = ["q-textarea__helper", error && "q-textarea__helper--error"]
-      .filter(Boolean)
-      .join(" ");
+    const helperClasses = cx("q-textarea__helper", error && "q-textarea__helper--error");
 
     return (
       <div className={wrapperClasses}>

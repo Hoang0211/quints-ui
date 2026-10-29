@@ -1,5 +1,6 @@
 import type { ReactElement, ReactNode } from "react";
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
+import { cx } from "../../utils/cx";
 import "./Tooltip.css";
 
 export type TooltipSide = "top" | "right" | "bottom" | "left";
@@ -29,7 +30,7 @@ export function Tooltip({
   delayDuration,
   className,
 }: TooltipProps) {
-  const classes = ["q-tooltip", className].filter(Boolean).join(" ");
+  const classes = cx("q-tooltip", className);
 
   return (
     <TooltipPrimitive.Provider delayDuration={delayDuration}>

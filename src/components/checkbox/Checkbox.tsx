@@ -6,6 +6,9 @@ import {
   type ReactNode,
 } from "react";
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
+import { CheckIcon } from "../../icons/CheckIcon";
+import { DashIcon } from "../../icons/DashIcon";
+import { cx } from "../../utils/cx";
 import "./Checkbox.css";
 
 export type CheckboxSize = "sm" | "md";
@@ -38,19 +41,15 @@ export const Checkbox = forwardRef<ComponentRef<typeof CheckboxPrimitive.Root>, 
     const helperId = `${checkboxId}-helper`;
     const helperContent = error && errorMessage ? errorMessage : helperText;
 
-    const wrapperClasses = [
+    const wrapperClasses = cx(
       "q-checkbox",
       `q-checkbox--${size}`,
       error && "q-checkbox--error",
       disabled && "q-checkbox--disabled",
       className,
-    ]
-      .filter(Boolean)
-      .join(" ");
+    );
 
-    const helperClasses = ["q-checkbox__helper", error && "q-checkbox__helper--error"]
-      .filter(Boolean)
-      .join(" ");
+    const helperClasses = cx("q-checkbox__helper", error && "q-checkbox__helper--error");
 
     return (
       <div className={wrapperClasses}>
@@ -65,37 +64,8 @@ export const Checkbox = forwardRef<ComponentRef<typeof CheckboxPrimitive.Root>, 
             {...rest}
           >
             <CheckboxPrimitive.Indicator className="q-checkbox__indicator">
-              <svg
-                className="q-checkbox__icon-check"
-                viewBox="0 0 12 12"
-                aria-hidden="true"
-                focusable="false"
-              >
-                <path
-                  d="M2.5 6.5l2.5 2.5 4.5-5.5"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-              <svg
-                className="q-checkbox__icon-dash"
-                viewBox="0 0 12 12"
-                aria-hidden="true"
-                focusable="false"
-              >
-                <line
-                  x1="2.5"
-                  y1="6"
-                  x2="9.5"
-                  y2="6"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-              </svg>
+              <CheckIcon className="q-checkbox__icon-check" />
+              <DashIcon className="q-checkbox__icon-dash" />
             </CheckboxPrimitive.Indicator>
           </CheckboxPrimitive.Root>
           {label && (

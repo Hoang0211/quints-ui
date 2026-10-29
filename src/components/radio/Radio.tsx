@@ -1,5 +1,6 @@
 import { forwardRef, useId, type ComponentPropsWithoutRef, type ComponentRef } from "react";
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
+import { cx } from "../../utils/cx";
 import "./Radio.css";
 
 export type RadioGroupOrientation = "horizontal" | "vertical";
@@ -40,19 +41,15 @@ const RadioGroupRoot = forwardRef<ComponentRef<typeof RadioGroupPrimitive.Root>,
     const helperId = `${groupId}-helper`;
     const helperContent = error && errorMessage ? errorMessage : helperText;
 
-    const wrapperClasses = [
+    const wrapperClasses = cx(
       "q-radio-group",
       `q-radio-group--${size}`,
       error && "q-radio-group--error",
       disabled && "q-radio-group--disabled",
       className,
-    ]
-      .filter(Boolean)
-      .join(" ");
+    );
 
-    const helperClasses = ["q-radio-group__helper", error && "q-radio-group__helper--error"]
-      .filter(Boolean)
-      .join(" ");
+    const helperClasses = cx("q-radio-group__helper", error && "q-radio-group__helper--error");
 
     return (
       <div className={wrapperClasses}>
@@ -94,7 +91,7 @@ const RadioGroupItem = forwardRef<
 >(({ className, id, children, ...rest }, ref) => {
   const generatedId = useId();
   const itemId = id ?? generatedId;
-  const wrapperClasses = ["q-radio-group__item", className].filter(Boolean).join(" ");
+  const wrapperClasses = cx("q-radio-group__item", className);
 
   return (
     <div className={wrapperClasses}>

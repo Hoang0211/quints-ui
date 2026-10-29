@@ -6,6 +6,7 @@ import {
   type ReactNode,
 } from "react";
 import * as SwitchPrimitive from "@radix-ui/react-switch";
+import { cx } from "../../utils/cx";
 import "./Toggle.css";
 
 export type ToggleSize = "sm" | "md";
@@ -41,19 +42,15 @@ export const Toggle = forwardRef<ComponentRef<typeof SwitchPrimitive.Root>, Togg
     const helperId = `${toggleId}-helper`;
     const helperContent = error && errorMessage ? errorMessage : helperText;
 
-    const wrapperClasses = [
+    const wrapperClasses = cx(
       "q-toggle",
       `q-toggle--${size}`,
       error && "q-toggle--error",
       disabled && "q-toggle--disabled",
       className,
-    ]
-      .filter(Boolean)
-      .join(" ");
+    );
 
-    const helperClasses = ["q-toggle__helper", error && "q-toggle__helper--error"]
-      .filter(Boolean)
-      .join(" ");
+    const helperClasses = cx("q-toggle__helper", error && "q-toggle__helper--error");
 
     const control = (
       <SwitchPrimitive.Root
