@@ -12,6 +12,7 @@ import { CalendarIcon } from "../../icons/CalendarIcon";
 import { ChevronLeftIcon } from "../../icons/ChevronLeftIcon";
 import { ChevronRightIcon } from "../../icons/ChevronRightIcon";
 import { cx } from "../../utils/cx";
+import { addDays, addMonths, buildCalendarWeeks, isSameDay, startOfDay } from "./DateTime.utils";
 import "./DateTime.css";
 
 const WEEKDAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -22,44 +23,6 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
   day: "numeric",
 });
 const monthFormatter = new Intl.DateTimeFormat("en-US", { year: "numeric", month: "long" });
-
-function startOfDay(date: Date): Date {
-  return new Date(date.getFullYear(), date.getMonth(), date.getDate());
-}
-
-function addDays(date: Date, amount: number): Date {
-  const next = new Date(date);
-  next.setDate(next.getDate() + amount);
-  return next;
-}
-
-// Clamps the day to the target month's length — a bare setMonth() overflows (Jan 31 + 1 → Mar 3),
-// which skips short months going forward and gets stuck on the same month going back.
-function addMonths(date: Date, amount: number): Date {
-  const next = new Date(date.getFullYear(), date.getMonth() + amount, 1);
-  const lastDayOfMonth = new Date(next.getFullYear(), next.getMonth() + 1, 0).getDate();
-  next.setDate(Math.min(date.getDate(), lastDayOfMonth));
-  return next;
-}
-
-function isSameDay(a: Date | null, b: Date | null): boolean {
-  if (!a || !b) return a === b;
-  return (
-    a.getFullYear() === b.getFullYear() &&
-    a.getMonth() === b.getMonth() &&
-    a.getDate() === b.getDate()
-  );
-}
-
-function buildCalendarWeeks(viewDate: Date): Date[][] {
-  const firstOfMonth = new Date(viewDate.getFullYear(), viewDate.getMonth(), 1);
-  const gridStart = addDays(firstOfMonth, -firstOfMonth.getDay());
-  const weeks: Date[][] = [];
-  for (let week = 0; week < 6; week++) {
-    weeks.push(Array.from({ length: 7 }, (_, day) => addDays(gridStart, week * 7 + day)));
-  }
-  return weeks;
-}
 
 export interface DateTimeProps extends Omit<
   ButtonHTMLAttributes<HTMLButtonElement>,

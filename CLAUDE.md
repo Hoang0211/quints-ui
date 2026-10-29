@@ -11,7 +11,7 @@ React + TypeScript UI component library (portfolio project), published as the un
 
 ## Component Convention
 
-Each component lives in its own folder under `src/components/<kebab-case-name>/`, containing four files: `Component.tsx`, `Component.css`, `Component.test.tsx`, `Component.stories.tsx`. `src/components/button/` is the reference implementation — follow its pattern for new components. Public API is re-exported from `src/index.ts`.
+Each component lives in its own folder under `src/components/<kebab-case-name>/`, containing four files: `Component.tsx`, `Component.css`, `Component.test.tsx`, `Component.stories.tsx`. Pure helper functions (no React, no state) used only by that component go in an optional `Component.utils.ts` beside it, unit-tested directly in `Component.utils.test.ts` — see `DateTime.utils.ts`/`Avatar.utils.ts`; keep types, constants and display config (e.g. formatters) in `Component.tsx`. `src/components/button/` is the reference implementation — follow its pattern for new components. Public API is re-exported from `src/index.ts`.
 
 Story titles are grouped by category as `Components/<Group>/<Name>`, with groups `Inputs`, `Feedback`, `Overlays`, `Navigation` and `Data Display`. Their sidebar order is set by `storySort` in `.storybook/preview.tsx`, so a new group must be added there too. Changing a title changes the story's URL on the deployed Storybook.
 
