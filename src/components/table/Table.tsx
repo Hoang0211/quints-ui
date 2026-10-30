@@ -2,7 +2,6 @@ import {
   createContext,
   forwardRef,
   useContext,
-  useEffect,
   useId,
   useMemo,
   useState,
@@ -12,6 +11,7 @@ import {
   type TdHTMLAttributes,
   type ThHTMLAttributes,
 } from "react";
+import { useRegisterId } from "../../hooks/useRegisterId";
 import { SortIcon } from "../../icons/SortIcon";
 import { cx } from "../../utils/cx";
 import "./Table.css";
@@ -92,14 +92,8 @@ export type TableCaptionProps = HTMLAttributes<HTMLTableCaptionElement>;
 const TableCaption = forwardRef<HTMLTableCaptionElement, TableCaptionProps>(
   ({ id: idProp, className, ...rest }, ref) => {
     const captionContext = useContext(TableCaptionContext);
-    const setCaptionId = captionContext?.setCaptionId;
     const id = idProp ?? captionContext?.defaultCaptionId;
-
-    useEffect(() => {
-      if (!setCaptionId || !id) return;
-      setCaptionId(id);
-      return () => setCaptionId(null);
-    }, [setCaptionId, id]);
+    useRegisterId(captionContext?.setCaptionId, id);
 
     const classes = cx("q-table__caption", className);
     return <caption ref={ref} id={id} className={classes} {...rest} />;

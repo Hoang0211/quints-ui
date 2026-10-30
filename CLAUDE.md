@@ -11,7 +11,7 @@ React + TypeScript UI component library (portfolio project), published as the un
 
 ## Component Convention
 
-Each component lives in its own folder under `src/components/<kebab-case-name>/`, containing four files: `Component.tsx`, `Component.css`, `Component.test.tsx`, `Component.stories.tsx`. Pure helper functions (no React, no state) used only by that component go in an optional `Component.utils.ts` beside it, unit-tested directly in `Component.utils.test.ts` — see `DateTime.utils.ts`/`Avatar.utils.ts`; keep types, constants and display config (e.g. formatters) in `Component.tsx`. `src/components/button/` is the reference implementation — follow its pattern for new components. Public API is re-exported from `src/index.ts`.
+Each component lives in its own folder under `src/components/<kebab-case-name>/`, containing four files: `Component.tsx`, `Component.css`, `Component.test.tsx`, `Component.stories.tsx`. Pure helper functions (no React, no state) used only by that component go in an optional `Component.utils.ts` beside it, unit-tested directly in `Component.utils.test.ts` — see `DateTime.utils.ts`/`Avatar.utils.ts`; keep types, constants and display config (e.g. formatters) in `Component.tsx`. A self-contained piece of stateful logic goes in a custom hook in its own file named after the hook, beside the component — e.g. `date-time/useCalendarNavigation.ts`, `avatar/useImageStatus.ts`. Hooks that share module-level state stay in one file named after the public hook, keeping that state private: `toast/useToast.ts` holds the toast store, `useToast` and the internal `useToastQueue` that `<Toaster />` uses. A public hook like `useToast` is re-exported from `src/index.ts` straight from its file. `src/components/button/` is the reference implementation — follow its pattern for new components. Public API is re-exported from `src/index.ts`.
 
 Story titles are grouped by category as `Components/<Group>/<Name>`, with groups `Inputs`, `Feedback`, `Overlays`, `Navigation` and `Data Display`. Their sidebar order is set by `storySort` in `.storybook/preview.tsx`, so a new group must be added there too. Changing a title changes the story's URL on the deployed Storybook.
 
@@ -22,6 +22,8 @@ Compound components (`Card`, `RadioGroup`, `Select`, `Dialog`, `Tabs`) attach th
 Shared internal SVG icons live in `src/icons/` (e.g. `CloseIcon`, `STATUS_ICONS`), outside `src/components/` and not re-exported from `src/index.ts`. Reuse or add an icon there instead of copying SVG markup into a component, and never import internals from another component's file.
 
 Class names are built with the internal `cx()` helper in `src/utils/cx.ts` (also not re-exported from `src/index.ts`) instead of a hand-written `[...].filter(Boolean).join(" ")` — pass the consumer `className` as the last argument, e.g. ``cx("q-button", `q-button--${variant}`, className)``.
+
+Internal hooks shared by more than one component live in `src/hooks/` (also not re-exported), e.g. `useRegisterId`, which sub-components like `Popover.Title` and `Table.Caption` use to report their id to the parent so it only sets `aria-labelledby`/`-describedby` on ids that exist.
 
 ## Design Tokens
 

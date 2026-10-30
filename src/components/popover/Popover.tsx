@@ -2,7 +2,6 @@ import {
   createContext,
   forwardRef,
   useContext,
-  useEffect,
   useId,
   useMemo,
   useState,
@@ -11,6 +10,7 @@ import {
   type HTMLAttributes,
 } from "react";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
+import { useRegisterId } from "../../hooks/useRegisterId";
 import { CloseIcon } from "../../icons/CloseIcon";
 import { cx } from "../../utils/cx";
 import "./Popover.css";
@@ -30,8 +30,8 @@ export type PopoverCloseProps = ComponentPropsWithoutRef<typeof PopoverPrimitive
 interface PopoverLabelContextValue {
   titleId: string;
   descriptionId: string;
-  setHasTitle: (hasTitle: boolean) => void;
-  setHasDescription: (hasDescription: boolean) => void;
+  setLabelledBy: (id: string | null) => void;
+  setDescribedBy: (id: string | null) => void;
 }
 
 const PopoverLabelContext = createContext<PopoverLabelContextValue | null>(null);
@@ -64,10 +64,10 @@ const PopoverContent = forwardRef<
   ) => {
     const titleId = useId();
     const descriptionId = useId();
-    const [hasTitle, setHasTitle] = useState(false);
-    const [hasDescription, setHasDescription] = useState(false);
+    const [labelledBy, setLabelledBy] = useState<string | null>(null);
+    const [describedBy, setDescribedBy] = useState<string | null>(null);
     const labelContext = useMemo(
-      () => ({ titleId, descriptionId, setHasTitle, setHasDescription }),
+      () => ({ titleId, descriptionId, setLabelledBy, setDescribedBy }),
       [titleId, descriptionId],
     );
 
@@ -85,8 +85,8 @@ const PopoverContent = forwardRef<
           side={side}
           align={align}
           sideOffset={sideOffset}
-          aria-labelledby={hasTitle ? titleId : undefined}
-          aria-describedby={hasDescription ? descriptionId : undefined}
+          aria-labelledby={labelledBy ?? undefined}
+          aria-describedby={describedBy ?? undefined}
           {...rest}
         >
           <PopoverLabelContext.Provider value={labelContext}>
@@ -111,13 +111,7 @@ export type PopoverTitleProps = HTMLAttributes<HTMLHeadingElement>;
 const PopoverTitle = forwardRef<HTMLHeadingElement, PopoverTitleProps>(
   ({ className, ...rest }, ref) => {
     const labelContext = useContext(PopoverLabelContext);
-    const setHasTitle = labelContext?.setHasTitle;
-
-    useEffect(() => {
-      if (!setHasTitle) return;
-      setHasTitle(true);
-      return () => setHasTitle(false);
-    }, [setHasTitle]);
+    useRegisterId(labelContext?.setLabelledBy, labelContext?.titleId);
 
     const classes = cx("q-popover__title", className);
     return <h2 ref={ref} className={classes} {...rest} id={labelContext?.titleId ?? rest.id} />;
@@ -131,13 +125,7 @@ export type PopoverDescriptionProps = HTMLAttributes<HTMLParagraphElement>;
 const PopoverDescription = forwardRef<HTMLParagraphElement, PopoverDescriptionProps>(
   ({ className, ...rest }, ref) => {
     const labelContext = useContext(PopoverLabelContext);
-    const setHasDescription = labelContext?.setHasDescription;
-
-    useEffect(() => {
-      if (!setHasDescription) return;
-      setHasDescription(true);
-      return () => setHasDescription(false);
-    }, [setHasDescription]);
+    useRegisterId(labelContext?.setDescribedBy, labelContext?.descriptionId);
 
     const classes = cx("q-popover__description", className);
     return (

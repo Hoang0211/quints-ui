@@ -1,6 +1,7 @@
-import { forwardRef, useCallback, useState, type HTMLAttributes, type ReactNode } from "react";
+import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
 import { UserIcon } from "../../icons/UserIcon";
 import { cx } from "../../utils/cx";
+import { useImageStatus } from "./useImageStatus";
 import { getInitials } from "./Avatar.utils";
 import "./Avatar.css";
 
@@ -19,20 +20,7 @@ export interface AvatarProps extends HTMLAttributes<HTMLSpanElement> {
 
 export const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(
   ({ src, name, fallback, size = "md", shape = "circle", className, ...rest }, ref) => {
-    // Track which src loaded/failed rather than a single status flag, so a
-    // new src automatically starts over without resetting state in an effect.
-    const [loadedSrc, setLoadedSrc] = useState<string | null>(null);
-    const [failedSrc, setFailedSrc] = useState<string | null>(null);
-    const isLoaded = src !== undefined && loadedSrc === src;
-    const hasFailed = src !== undefined && failedSrc === src;
-
-    // An image that finished loading before React attached onLoad (cached, or
-    // during hydration) never fires the event, so check on mount too.
-    const imageRef = useCallback((image: HTMLImageElement | null) => {
-      if (image?.complete && image.naturalWidth > 0) {
-        setLoadedSrc(image.getAttribute("src"));
-      }
-    }, []);
+    const { isLoaded, hasFailed, imageRef, handleLoad, handleError } = useImageStatus(src);
 
     const classes = cx("q-avatar", `q-avatar--${size}`, `q-avatar--${shape}`, className);
 
@@ -54,8 +42,8 @@ export const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(
             className={cx("q-avatar__image", isLoaded && "q-avatar__image--loaded")}
             src={src}
             alt=""
-            onLoad={() => setLoadedSrc(src)}
-            onError={() => setFailedSrc(src)}
+            onLoad={handleLoad}
+            onError={handleError}
           />
         )}
         {!isLoaded && (
