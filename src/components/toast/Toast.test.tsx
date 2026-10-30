@@ -4,7 +4,8 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "vitest-axe";
 import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { Button } from "../button/Button";
-import { Toast, Toaster, useToast, type ToastOptions } from "./Toast";
+import { Toast, Toaster } from "./Toast";
+import { useToast, type ToastOptions } from "./useToast";
 
 // jsdom doesn't implement these, and Radix Toast's swipe handling calls them
 // on every pointerup inside a toast.

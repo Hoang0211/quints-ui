@@ -1,18 +1,11 @@
-import {
-  forwardRef,
-  useEffect,
-  useId,
-  useRef,
-  useState,
-  type ButtonHTMLAttributes,
-  type KeyboardEvent,
-} from "react";
+import { forwardRef, useId, useState, type ButtonHTMLAttributes } from "react";
 import * as Popover from "@radix-ui/react-popover";
 import { CalendarIcon } from "../../icons/CalendarIcon";
 import { ChevronLeftIcon } from "../../icons/ChevronLeftIcon";
 import { ChevronRightIcon } from "../../icons/ChevronRightIcon";
 import { cx } from "../../utils/cx";
-import { addDays, addMonths, buildCalendarWeeks, isSameDay, startOfDay } from "./DateTime.utils";
+import { useCalendarNavigation } from "./useCalendarNavigation";
+import { buildCalendarWeeks, isSameDay, startOfDay } from "./DateTime.utils";
 import "./DateTime.css";
 
 const WEEKDAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -67,25 +60,6 @@ export const DateTime = forwardRef<HTMLButtonElement, DateTimeProps>(
     const selectedDate = isControlled ? value : internalValue;
 
     const [open, setOpen] = useState(false);
-    const [viewDate, setViewDate] = useState<Date>(() => startOfDay(selectedDate ?? new Date()));
-    const [focusedDate, setFocusedDate] = useState<Date>(() =>
-      startOfDay(selectedDate ?? new Date()),
-    );
-    const dayRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
-
-    useEffect(() => {
-      if (!open) return;
-      dayRefs.current.get(focusedDate.toDateString())?.focus();
-    }, [focusedDate, open]);
-
-    const handleOpenChange = (nextOpen: boolean) => {
-      if (nextOpen) {
-        const anchor = startOfDay(selectedDate ?? new Date());
-        setViewDate(anchor);
-        setFocusedDate(anchor);
-      }
-      setOpen(nextOpen);
-    };
 
     const handleSelect = (day: Date) => {
       const next = startOfDay(day);
@@ -94,42 +68,20 @@ export const DateTime = forwardRef<HTMLButtonElement, DateTimeProps>(
       setOpen(false);
     };
 
-    const handleGridKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-      const dayDeltas: Record<string, number> = {
-        ArrowLeft: -1,
-        ArrowRight: 1,
-        ArrowUp: -7,
-        ArrowDown: 7,
-      };
+    const {
+      viewDate,
+      focusedDate,
+      setFocusedDate,
+      resetView,
+      showPreviousMonth,
+      showNextMonth,
+      dayRef,
+      handleGridKeyDown,
+    } = useCalendarNavigation({ selectedDate: selectedDate ?? null, open, onSelect: handleSelect });
 
-      if (event.key in dayDeltas) {
-        event.preventDefault();
-        const next = addDays(focusedDate, dayDeltas[event.key]);
-        if (
-          next.getMonth() !== viewDate.getMonth() ||
-          next.getFullYear() !== viewDate.getFullYear()
-        ) {
-          setViewDate(next);
-        }
-        setFocusedDate(next);
-      } else if (event.key === "PageUp") {
-        event.preventDefault();
-        setViewDate((prev) => addMonths(prev, -1));
-        setFocusedDate((prev) => addMonths(prev, -1));
-      } else if (event.key === "PageDown") {
-        event.preventDefault();
-        setViewDate((prev) => addMonths(prev, 1));
-        setFocusedDate((prev) => addMonths(prev, 1));
-      } else if (event.key === "Home") {
-        event.preventDefault();
-        setFocusedDate((prev) => addDays(prev, -prev.getDay()));
-      } else if (event.key === "End") {
-        event.preventDefault();
-        setFocusedDate((prev) => addDays(prev, 6 - prev.getDay()));
-      } else if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        handleSelect(focusedDate);
-      }
+    const handleOpenChange = (nextOpen: boolean) => {
+      if (nextOpen) resetView();
+      setOpen(nextOpen);
     };
 
     const wrapperClasses = cx(
@@ -178,7 +130,7 @@ export const DateTime = forwardRef<HTMLButtonElement, DateTimeProps>(
                   type="button"
                   className="q-date-time__nav"
                   aria-label="Previous month"
-                  onClick={() => setViewDate((prev) => addMonths(prev, -1))}
+                  onClick={showPreviousMonth}
                 >
                   <ChevronLeftIcon />
                 </button>
@@ -187,7 +139,7 @@ export const DateTime = forwardRef<HTMLButtonElement, DateTimeProps>(
                   type="button"
                   className="q-date-time__nav"
                   aria-label="Next month"
-                  onClick={() => setViewDate((prev) => addMonths(prev, 1))}
+                  onClick={showNextMonth}
                 >
                   <ChevronRightIcon />
                 </button>
@@ -218,10 +170,7 @@ export const DateTime = forwardRef<HTMLButtonElement, DateTimeProps>(
                       return (
                         <button
                           key={day.toDateString()}
-                          ref={(el) => {
-                            if (el) dayRefs.current.set(day.toDateString(), el);
-                            else dayRefs.current.delete(day.toDateString());
-                          }}
+                          ref={dayRef(day)}
                           type="button"
                           role="gridcell"
                           className={dayClasses}
