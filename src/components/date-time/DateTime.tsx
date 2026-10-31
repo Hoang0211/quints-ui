@@ -1,21 +1,10 @@
 import { forwardRef, useId, useState, type ButtonHTMLAttributes } from "react";
 import * as Popover from "@radix-ui/react-popover";
 import { CalendarIcon } from "../../icons/CalendarIcon";
-import { ChevronLeftIcon } from "../../icons/ChevronLeftIcon";
-import { ChevronRightIcon } from "../../icons/ChevronRightIcon";
 import { cx } from "../../utils/cx";
-import { useCalendarNavigation } from "./useCalendarNavigation";
-import { buildCalendarWeeks, isSameDay, startOfDay } from "./DateTime.utils";
+import { Calendar } from "./Calendar";
+import { formatDate, startOfDay } from "./DateTime.utils";
 import "./DateTime.css";
-
-const WEEKDAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
-const dateFormatter = new Intl.DateTimeFormat("en-US", {
-  year: "numeric",
-  month: "long",
-  day: "numeric",
-});
-const monthFormatter = new Intl.DateTimeFormat("en-US", { year: "numeric", month: "long" });
 
 export interface DateTimeProps extends Omit<
   ButtonHTMLAttributes<HTMLButtonElement>,
@@ -68,23 +57,6 @@ export const DateTime = forwardRef<HTMLButtonElement, DateTimeProps>(
       setOpen(false);
     };
 
-    const {
-      viewDate,
-      focusedDate,
-      setFocusedDate,
-      focusCurrentDay,
-      resetView,
-      showPreviousMonth,
-      showNextMonth,
-      dayRef,
-      handleGridKeyDown,
-    } = useCalendarNavigation({ selectedDate: selectedDate ?? null, open, onSelect: handleSelect });
-
-    const handleOpenChange = (nextOpen: boolean) => {
-      if (nextOpen) resetView();
-      setOpen(nextOpen);
-    };
-
     const wrapperClasses = cx(
       "q-date-time",
       error && "q-date-time--error",
@@ -96,9 +68,6 @@ export const DateTime = forwardRef<HTMLButtonElement, DateTimeProps>(
     const helperContent = error && errorMessage ? errorMessage : helperText;
     const helperClasses = cx("q-date-time__helper", error && "q-date-time__helper--error");
 
-    const today = startOfDay(new Date());
-    const weeks = buildCalendarWeeks(viewDate);
-
     return (
       <div className={wrapperClasses}>
         {label && (
@@ -106,7 +75,7 @@ export const DateTime = forwardRef<HTMLButtonElement, DateTimeProps>(
             {label}
           </label>
         )}
-        <Popover.Root open={open} onOpenChange={handleOpenChange}>
+        <Popover.Root open={open} onOpenChange={setOpen}>
           <Popover.Trigger asChild>
             <button
               ref={ref}
@@ -119,7 +88,7 @@ export const DateTime = forwardRef<HTMLButtonElement, DateTimeProps>(
               {...rest}
             >
               <span className="q-date-time__value">
-                {selectedDate ? dateFormatter.format(selectedDate) : placeholder}
+                {selectedDate ? formatDate(selectedDate) : placeholder}
               </span>
               <CalendarIcon className="q-date-time__icon" />
             </button>
@@ -130,75 +99,10 @@ export const DateTime = forwardRef<HTMLButtonElement, DateTimeProps>(
               sideOffset={4}
               align="start"
               // Radix would focus the first button ("Previous month"); per the WAI-ARIA
-              // date picker pattern, focus the selected day (or today) instead.
-              onOpenAutoFocus={(event) => {
-                event.preventDefault();
-                focusCurrentDay();
-              }}
+              // date picker pattern, Calendar focuses the selected day (or today) itself.
+              onOpenAutoFocus={(event) => event.preventDefault()}
             >
-              <div className="q-date-time__header">
-                <button
-                  type="button"
-                  className="q-date-time__nav"
-                  aria-label="Previous month"
-                  onClick={showPreviousMonth}
-                >
-                  <ChevronLeftIcon />
-                </button>
-                <span className="q-date-time__month-label">{monthFormatter.format(viewDate)}</span>
-                <button
-                  type="button"
-                  className="q-date-time__nav"
-                  aria-label="Next month"
-                  onClick={showNextMonth}
-                >
-                  <ChevronRightIcon />
-                </button>
-              </div>
-              <div
-                className="q-date-time__grid"
-                role="grid"
-                aria-label={monthFormatter.format(viewDate)}
-                onKeyDown={handleGridKeyDown}
-              >
-                <div className="q-date-time__weekdays" role="row">
-                  {WEEKDAY_LABELS.map((weekday) => (
-                    <span key={weekday} className="q-date-time__weekday" role="columnheader">
-                      {weekday}
-                    </span>
-                  ))}
-                </div>
-                {weeks.map((week, weekIndex) => (
-                  <div key={weekIndex} className="q-date-time__week" role="row">
-                    {week.map((day) => {
-                      const dayClasses = cx(
-                        "q-date-time__day",
-                        day.getMonth() !== viewDate.getMonth() && "q-date-time__day--outside",
-                        isSameDay(day, selectedDate ?? null) && "q-date-time__day--selected",
-                        isSameDay(day, today) && "q-date-time__day--today",
-                      );
-
-                      return (
-                        <button
-                          key={day.toDateString()}
-                          ref={dayRef(day)}
-                          type="button"
-                          role="gridcell"
-                          className={dayClasses}
-                          tabIndex={isSameDay(day, focusedDate) ? 0 : -1}
-                          aria-selected={isSameDay(day, selectedDate ?? null)}
-                          aria-current={isSameDay(day, today) ? "date" : undefined}
-                          aria-label={dateFormatter.format(day)}
-                          onClick={() => handleSelect(day)}
-                          onFocus={() => setFocusedDate(day)}
-                        >
-                          {day.getDate()}
-                        </button>
-                      );
-                    })}
-                  </div>
-                ))}
-              </div>
+              <Calendar selectedDate={selectedDate ?? null} onSelect={handleSelect} />
             </Popover.Content>
           </Popover.Portal>
         </Popover.Root>
