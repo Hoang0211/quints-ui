@@ -8,7 +8,6 @@ import * as ToastPrimitive from "@radix-ui/react-toast";
 import { CloseIcon } from "../../icons/CloseIcon";
 import { STATUS_ICONS } from "../../icons/StatusIcons";
 import { cx } from "../../utils/cx";
-import { useToastQueue } from "./useToast";
 import "./Toast.css";
 
 export type ToastVariant = "neutral" | "success" | "warning" | "alert" | "info";
@@ -101,37 +100,3 @@ export const Toast = Object.assign(ToastRoot, {
   Action: ToastAction,
   Close: ToastPrimitive.Close,
 });
-
-export type ToasterProps = ToastViewportProps;
-
-export const Toaster = forwardRef<ComponentRef<typeof ToastPrimitive.Viewport>, ToasterProps>(
-  (props, ref) => {
-    const { toasts, closeToasts } = useToastQueue();
-
-    return (
-      <ToastPrimitive.Provider>
-        {toasts.map(({ id, open, title, description, action, ...options }) => (
-          <ToastRoot
-            key={id}
-            open={open}
-            onOpenChange={(next) => {
-              if (!next) closeToasts(id);
-            }}
-            {...options}
-          >
-            {title && <ToastTitle>{title}</ToastTitle>}
-            {description && <ToastDescription>{description}</ToastDescription>}
-            {action && (
-              <ToastAction altText={action.altText} onClick={action.onClick}>
-                {action.label}
-              </ToastAction>
-            )}
-          </ToastRoot>
-        ))}
-        <ToastViewport ref={ref} {...props} />
-      </ToastPrimitive.Provider>
-    );
-  },
-);
-
-Toaster.displayName = "Toaster";
