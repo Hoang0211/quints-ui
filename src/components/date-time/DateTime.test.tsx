@@ -41,6 +41,30 @@ describe("DateTime", () => {
     expect(screen.getByRole("grid")).toBeInTheDocument();
   });
 
+  it("focuses the selected day when the calendar opens", async () => {
+    const user = userEvent.setup();
+    render(<DateTime label="Start date" defaultValue={new Date(2026, 0, 15)} />);
+
+    await user.click(screen.getByRole("button", { name: /start date/i }));
+
+    expect(screen.getByRole("gridcell", { name: "January 15, 2026" })).toHaveFocus();
+  });
+
+  it("reopens on the selected month after navigating away and closing", async () => {
+    const user = userEvent.setup();
+    render(<DateTime label="Start date" defaultValue={new Date(2026, 0, 15)} />);
+
+    await user.click(screen.getByRole("button", { name: /start date/i }));
+    await user.keyboard("{PageDown}");
+    expect(screen.getByRole("grid", { name: "February 2026" })).toBeInTheDocument();
+
+    await user.keyboard("{Escape}");
+    await user.click(screen.getByRole("button", { name: /start date/i }));
+
+    expect(screen.getByRole("grid", { name: "January 2026" })).toBeInTheDocument();
+    expect(screen.getByRole("gridcell", { name: "January 15, 2026" })).toHaveFocus();
+  });
+
   it("calls onChange with the clicked day and closes the calendar", async () => {
     const user = userEvent.setup();
     const onChange = vi.fn();

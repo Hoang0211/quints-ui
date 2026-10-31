@@ -28,6 +28,12 @@ export function useCalendarNavigation({ selectedDate, open, onSelect }: Calendar
     dayRefs.current.get(focusedDate.toDateString())?.focus();
   }, [focusedDate, open]);
 
+  // The effect above can't focus the day on open: Radix's portal mounts the day
+  // buttons a render later. Call this from Popover.Content's onOpenAutoFocus instead.
+  const focusCurrentDay = () => {
+    dayRefs.current.get(focusedDate.toDateString())?.focus();
+  };
+
   // Re-anchors the view and focus on the selected date (or today), e.g. when the calendar opens.
   const resetView = () => {
     const anchor = startOfDay(selectedDate ?? new Date());
@@ -78,6 +84,7 @@ export function useCalendarNavigation({ selectedDate, open, onSelect }: Calendar
     viewDate,
     focusedDate,
     setFocusedDate,
+    focusCurrentDay,
     resetView,
     showPreviousMonth,
     showNextMonth,

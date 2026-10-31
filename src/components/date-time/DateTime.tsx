@@ -72,6 +72,7 @@ export const DateTime = forwardRef<HTMLButtonElement, DateTimeProps>(
       viewDate,
       focusedDate,
       setFocusedDate,
+      focusCurrentDay,
       resetView,
       showPreviousMonth,
       showNextMonth,
@@ -124,7 +125,17 @@ export const DateTime = forwardRef<HTMLButtonElement, DateTimeProps>(
             </button>
           </Popover.Trigger>
           <Popover.Portal>
-            <Popover.Content className="q-date-time__content" sideOffset={4} align="start">
+            <Popover.Content
+              className="q-date-time__content"
+              sideOffset={4}
+              align="start"
+              // Radix would focus the first button ("Previous month"); per the WAI-ARIA
+              // date picker pattern, focus the selected day (or today) instead.
+              onOpenAutoFocus={(event) => {
+                event.preventDefault();
+                focusCurrentDay();
+              }}
+            >
               <div className="q-date-time__header">
                 <button
                   type="button"
