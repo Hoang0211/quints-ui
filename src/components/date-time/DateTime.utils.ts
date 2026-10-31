@@ -1,3 +1,20 @@
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+const monthFormatter = new Intl.DateTimeFormat("en-US", { year: "numeric", month: "long" });
+
+// "January 15, 2026" — the trigger's value and each day's accessible name.
+export function formatDate(date: Date): string {
+  return dateFormatter.format(date);
+}
+
+// "January 2026" — the calendar's month heading and grid label.
+export function formatMonth(date: Date): string {
+  return monthFormatter.format(date);
+}
+
 export function startOfDay(date: Date): Date {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 }

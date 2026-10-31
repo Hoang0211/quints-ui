@@ -162,7 +162,8 @@ export type {
   TableCellProps,
 } from "./components/table/Table";
 
-export { Toast, Toaster } from "./components/toast/Toast";
+export { Toast } from "./components/toast/Toast";
+export { Toaster } from "./components/toast/Toaster";
 export { useToast } from "./components/toast/useToast";
 export type {
   ToastProps,
@@ -173,6 +174,6 @@ export type {
   ToastDescriptionProps,
   ToastActionProps,
   ToastCloseProps,
-  ToasterProps,
 } from "./components/toast/Toast";
+export type { ToasterProps } from "./components/toast/Toaster";
 export type { ToastOptions, ToastActionOptions } from "./components/toast/useToast";

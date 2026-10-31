@@ -10,13 +10,13 @@ const DAY_DELTAS: Record<string, number> = {
 
 interface CalendarNavigationOptions {
   selectedDate: Date | null;
-  /** The focused day only takes DOM focus while the calendar is open. */
-  open: boolean;
   onSelect: (day: Date) => void;
 }
 
 // The visible month, the roving-focus day, and the grid's keyboard navigation.
-export function useCalendarNavigation({ selectedDate, open, onSelect }: CalendarNavigationOptions) {
+// Starts on the selected date (or today) and moves DOM focus to the focused day,
+// including on mount, so the calling component should only mount while visible.
+export function useCalendarNavigation({ selectedDate, onSelect }: CalendarNavigationOptions) {
   const [viewDate, setViewDate] = useState<Date>(() => startOfDay(selectedDate ?? new Date()));
   const [focusedDate, setFocusedDate] = useState<Date>(() =>
     startOfDay(selectedDate ?? new Date()),
@@ -24,16 +24,8 @@ export function useCalendarNavigation({ selectedDate, open, onSelect }: Calendar
   const dayRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
 
   useEffect(() => {
-    if (!open) return;
     dayRefs.current.get(focusedDate.toDateString())?.focus();
-  }, [focusedDate, open]);
-
-  // Re-anchors the view and focus on the selected date (or today), e.g. when the calendar opens.
-  const resetView = () => {
-    const anchor = startOfDay(selectedDate ?? new Date());
-    setViewDate(anchor);
-    setFocusedDate(anchor);
-  };
+  }, [focusedDate]);
 
   const showPreviousMonth = () => setViewDate((prev) => addMonths(prev, -1));
   const showNextMonth = () => setViewDate((prev) => addMonths(prev, 1));
@@ -78,7 +70,6 @@ export function useCalendarNavigation({ selectedDate, open, onSelect }: Calendar
     viewDate,
     focusedDate,
     setFocusedDate,
-    resetView,
     showPreviousMonth,
     showNextMonth,
     dayRef,

@@ -1,5 +1,25 @@
 import { describe, expect, it } from "vitest";
-import { addDays, addMonths, buildCalendarWeeks, isSameDay, startOfDay } from "./DateTime.utils";
+import {
+  addDays,
+  addMonths,
+  buildCalendarWeeks,
+  formatDate,
+  formatMonth,
+  isSameDay,
+  startOfDay,
+} from "./DateTime.utils";
+
+describe("formatDate", () => {
+  it("formats as month name, day and year", () => {
+    expect(formatDate(new Date(2026, 0, 15))).toBe("January 15, 2026");
+  });
+});
+
+describe("formatMonth", () => {
+  it("formats as month name and year", () => {
+    expect(formatMonth(new Date(2026, 0, 15))).toBe("January 2026");
+  });
+});
 
 describe("startOfDay", () => {
   it("drops the time of day", () => {
