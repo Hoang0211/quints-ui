@@ -41,11 +41,13 @@ describe("DateTime", () => {
     expect(screen.getByRole("grid")).toBeInTheDocument();
   });
 
-  it("focuses the selected day when the calendar opens", async () => {
+  it("focuses the selected day when the calendar opens from the keyboard", async () => {
     const user = userEvent.setup();
     render(<DateTime label="Start date" defaultValue={new Date(2026, 0, 15)} />);
 
-    await user.click(screen.getByRole("button", { name: /start date/i }));
+    await user.tab();
+    expect(screen.getByRole("button", { name: /start date/i })).toHaveFocus();
+    await user.keyboard("{Enter}");
 
     expect(screen.getByRole("gridcell", { name: "January 15, 2026" })).toHaveFocus();
   });
@@ -115,9 +117,8 @@ describe("DateTime", () => {
     const user = userEvent.setup();
     render(<DateTime label="Start date" defaultValue={new Date(2026, 0, 31)} />);
 
-    await user.click(screen.getByRole("button", { name: /start date/i }));
-    const grid = screen.getByRole("grid");
-    within(grid).getByRole("gridcell", { name: "January 31, 2026" }).focus();
+    await user.tab();
+    await user.keyboard("{Enter}");
     await user.keyboard("{PageDown}");
 
     expect(screen.getByRole("grid", { name: "February 2026" })).toBeInTheDocument();

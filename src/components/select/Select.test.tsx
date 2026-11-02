@@ -76,6 +76,83 @@ describe("Select", () => {
     expect(screen.getByText("Banana")).toBeInTheDocument();
   });
 
+  it("opens from the keyboard and focuses the first option when nothing is selected", async () => {
+    const user = userEvent.setup();
+    render(
+      <Select label="Fruit">
+        <Select.Item value="apple">Apple</Select.Item>
+        <Select.Item value="banana">Banana</Select.Item>
+      </Select>,
+    );
+
+    await user.tab();
+    expect(screen.getByRole("combobox", { name: "Fruit" })).toHaveFocus();
+    await user.keyboard("{Enter}");
+
+    expect(screen.getByRole("listbox")).toBeInTheDocument();
+    expect(screen.getByRole("option", { name: "Apple" })).toHaveFocus();
+  });
+
+  it("opens from the keyboard on the selected option", async () => {
+    const user = userEvent.setup();
+    render(
+      <Select label="Fruit" defaultValue="banana">
+        <Select.Item value="apple">Apple</Select.Item>
+        <Select.Item value="banana">Banana</Select.Item>
+        <Select.Item value="cherry">Cherry</Select.Item>
+      </Select>,
+    );
+
+    await user.tab();
+    await user.keyboard("{Enter}");
+
+    expect(screen.getByRole("option", { name: "Banana" })).toHaveFocus();
+  });
+
+  it("moves between options with arrow keys, selects with Enter and refocuses the trigger", async () => {
+    const user = userEvent.setup();
+    const onValueChange = vi.fn();
+    render(
+      <Select label="Fruit" onValueChange={onValueChange}>
+        <Select.Item value="apple">Apple</Select.Item>
+        <Select.Item value="banana">Banana</Select.Item>
+      </Select>,
+    );
+    const trigger = screen.getByRole("combobox", { name: "Fruit" });
+
+    await user.tab();
+    await user.keyboard("{Enter}");
+    await user.keyboard("{ArrowDown}");
+    expect(screen.getByRole("option", { name: "Banana" })).toHaveFocus();
+
+    await user.keyboard("{Enter}");
+
+    expect(onValueChange).toHaveBeenCalledWith("banana");
+    expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
+    expect(trigger).toHaveFocus();
+  });
+
+  it("closes on Escape without changing the value and refocuses the trigger", async () => {
+    const user = userEvent.setup();
+    const onValueChange = vi.fn();
+    render(
+      <Select label="Fruit" onValueChange={onValueChange}>
+        <Select.Item value="apple">Apple</Select.Item>
+        <Select.Item value="banana">Banana</Select.Item>
+      </Select>,
+    );
+    const trigger = screen.getByRole("combobox", { name: "Fruit" });
+
+    await user.tab();
+    await user.keyboard("{Enter}");
+    await user.keyboard("{ArrowDown}");
+    await user.keyboard("{Escape}");
+
+    expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
+    expect(onValueChange).not.toHaveBeenCalled();
+    expect(trigger).toHaveFocus();
+  });
+
   it("shows the error message instead of helper text and marks the trigger invalid", () => {
     render(
       <Select label="Fruit" helperText="Pick your favorite" error errorMessage="Fruit is required">
