@@ -86,6 +86,49 @@ describe("Dialog", () => {
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   });
 
+  it("opens from the keyboard and moves focus into the dialog", async () => {
+    const user = userEvent.setup();
+    renderDialog();
+
+    await user.tab();
+    expect(screen.getByRole("button", { name: "Open dialog" })).toHaveFocus();
+    await user.keyboard("{Enter}");
+
+    expect(screen.getByRole("dialog")).toContainElement(document.activeElement as HTMLElement);
+  });
+
+  it("keeps Tab and Shift+Tab focus trapped inside the dialog", async () => {
+    const user = userEvent.setup();
+    renderDialog();
+
+    await user.tab();
+    await user.keyboard("{Enter}");
+    const dialog = screen.getByRole("dialog");
+
+    // More presses than the dialog has focusable elements, so focus has to wrap.
+    for (let i = 0; i < 5; i++) {
+      await user.tab();
+      expect(dialog).toContainElement(document.activeElement as HTMLElement);
+    }
+    for (let i = 0; i < 5; i++) {
+      await user.tab({ shift: true });
+      expect(dialog).toContainElement(document.activeElement as HTMLElement);
+    }
+  });
+
+  it("returns focus to the trigger when closed with Escape", async () => {
+    const user = userEvent.setup();
+    renderDialog();
+    const trigger = screen.getByRole("button", { name: "Open dialog" });
+
+    await user.tab();
+    await user.keyboard("{Enter}");
+    await user.keyboard("{Escape}");
+
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(trigger).toHaveFocus();
+  });
+
   it("hides the built-in close button when showCloseButton is false", async () => {
     const user = userEvent.setup();
     render(

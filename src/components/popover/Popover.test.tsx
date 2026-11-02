@@ -78,6 +78,27 @@ describe("Popover", () => {
     expect(dialog).toHaveAccessibleName("Quick note");
   });
 
+  it("opens from the keyboard and moves focus into the content", async () => {
+    const user = userEvent.setup();
+    renderPopover();
+
+    await user.tab();
+    expect(screen.getByRole("button", { name: "Filters" })).toHaveFocus();
+    await user.keyboard("{Enter}");
+
+    expect(screen.getByRole("dialog")).toContainElement(document.activeElement as HTMLElement);
+  });
+
+  it("focuses the close button on open when it's the only focusable element", async () => {
+    const user = userEvent.setup();
+    renderPopover({ showCloseButton: true });
+
+    await user.tab();
+    await user.keyboard("{Enter}");
+
+    expect(screen.getByRole("button", { name: "Close" })).toHaveFocus();
+  });
+
   it("closes on Escape and returns focus to the trigger", async () => {
     const user = userEvent.setup();
     renderPopover();
