@@ -25,6 +25,8 @@ Class names are built with the internal `cx()` helper in `src/utils/cx.ts` (also
 
 Internal hooks shared by more than one component live in `src/hooks/` (also not re-exported), e.g. `useRegisterId`, which sub-components like `Popover.Title` and `Table.Caption` use to report their id to the parent so it only sets `aria-labelledby`/`-describedby` on ids that exist.
 
+Form controls (`TextField`, `Textarea`, `Select`, `Checkbox`, `RadioGroup`, `Toggle`, `DateTime`) share their id, aria and helper-text handling through `useField` (`src/hooks/useField.ts`) and the internal `<FieldHelper>` (`src/components/field/FieldHelper.tsx`, not re-exported, no stories of its own) — use both for any new form control. Spread `field.controlProps` before the consumer's `{...rest}` so their `aria-*` props still win, and pass the component's BEM block (`<FieldHelper block="q-text-field" {...field.helperProps} />`) so per-component class names like `.q-text-field__helper` stay stable for consumer CSS overrides. Labels stay in each component, since they come in two styles: above the control (small, medium weight) and beside it (`Checkbox`, `Toggle`).
+
 ## Design Tokens
 
 Brand colors (primary/secondary/accent) each have base/`-hover`/`-active`/`-contrast` variants. Status colors (success/warning/alert/info) all have base/`-contrast` pairs — `-contrast` (always white) is needed by any solid-fill-plus-text usage (e.g. `Badge`) to pass WCAG contrast, so add it for a color as soon as such a usage exists. Only `alert` additionally has `-hover`, since that's the only status color a component (`Button`) currently uses as an interactive/hoverable surface — add `-hover` to the others only once a component actually needs it.

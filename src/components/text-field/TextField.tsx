@@ -1,5 +1,7 @@
-import { forwardRef, useId, type InputHTMLAttributes, type ReactNode } from "react";
+import { forwardRef, type InputHTMLAttributes, type ReactNode } from "react";
+import { useField } from "../../hooks/useField";
 import { cx } from "../../utils/cx";
+import { FieldHelper } from "../field/FieldHelper";
 import "./TextField.css";
 
 export type TextFieldVariant = "outline" | "filled";
@@ -36,10 +38,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
     },
     ref,
   ) => {
-    const generatedId = useId();
-    const inputId = id ?? generatedId;
-    const helperId = `${inputId}-helper`;
-    const helperContent = error && errorMessage ? errorMessage : helperText;
+    const field = useField({ id, helperText, error, errorMessage });
 
     const wrapperClasses = cx(
       "q-text-field",
@@ -51,12 +50,10 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       className,
     );
 
-    const helperClasses = cx("q-text-field__helper", error && "q-text-field__helper--error");
-
     return (
       <div className={wrapperClasses}>
         {label && (
-          <label className="q-text-field__label" htmlFor={inputId}>
+          <label className="q-text-field__label" htmlFor={field.controlId}>
             {label}
           </label>
         )}
@@ -68,11 +65,9 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
           )}
           <input
             ref={ref}
-            id={inputId}
+            {...field.controlProps}
             className="q-text-field__input"
             disabled={disabled}
-            aria-invalid={error || undefined}
-            aria-describedby={helperContent ? helperId : undefined}
             {...rest}
           />
           {rightIcon && (
@@ -81,11 +76,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
             </span>
           )}
         </div>
-        {helperContent && (
-          <div id={helperId} className={helperClasses}>
-            {helperContent}
-          </div>
-        )}
+        <FieldHelper block="q-text-field" {...field.helperProps} />
       </div>
     );
   },

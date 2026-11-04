@@ -1,9 +1,11 @@
-import { forwardRef, useId, type ComponentPropsWithoutRef, type ComponentRef } from "react";
+import { forwardRef, type ComponentPropsWithoutRef, type ComponentRef } from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
+import { useField } from "../../hooks/useField";
 import { CheckIcon } from "../../icons/CheckIcon";
 import { ChevronDownIcon } from "../../icons/ChevronDownIcon";
 import { ChevronUpIcon } from "../../icons/ChevronUpIcon";
 import { cx } from "../../utils/cx";
+import { FieldHelper } from "../field/FieldHelper";
 import "./Select.css";
 
 export type SelectSize = "sm" | "md";
@@ -38,10 +40,7 @@ const SelectRoot = forwardRef<ComponentRef<typeof SelectPrimitive.Trigger>, Sele
     },
     ref,
   ) => {
-    const generatedId = useId();
-    const triggerId = id ?? generatedId;
-    const helperId = `${triggerId}-helper`;
-    const helperContent = error && errorMessage ? errorMessage : helperText;
+    const field = useField({ id, helperText, error, errorMessage });
 
     const wrapperClasses = cx(
       "q-select",
@@ -52,23 +51,15 @@ const SelectRoot = forwardRef<ComponentRef<typeof SelectPrimitive.Trigger>, Sele
 
     const triggerClasses = cx("q-select__trigger", `q-select__trigger--${size}`);
 
-    const helperClasses = cx("q-select__helper", error && "q-select__helper--error");
-
     return (
       <div className={wrapperClasses}>
         {label && (
-          <label className="q-select__label" htmlFor={triggerId}>
+          <label className="q-select__label" htmlFor={field.controlId}>
             {label}
           </label>
         )}
         <SelectPrimitive.Root disabled={disabled} {...rootProps}>
-          <SelectPrimitive.Trigger
-            ref={ref}
-            id={triggerId}
-            className={triggerClasses}
-            aria-invalid={error || undefined}
-            aria-describedby={helperContent ? helperId : undefined}
-          >
+          <SelectPrimitive.Trigger ref={ref} {...field.controlProps} className={triggerClasses}>
             <SelectPrimitive.Value placeholder={placeholder} />
             <SelectPrimitive.Icon className="q-select__icon">
               <ChevronDownIcon />
@@ -88,11 +79,7 @@ const SelectRoot = forwardRef<ComponentRef<typeof SelectPrimitive.Trigger>, Sele
             </SelectPrimitive.Content>
           </SelectPrimitive.Portal>
         </SelectPrimitive.Root>
-        {helperContent && (
-          <div id={helperId} className={helperClasses}>
-            {helperContent}
-          </div>
-        )}
+        <FieldHelper block="q-select" {...field.helperProps} />
       </div>
     );
   },

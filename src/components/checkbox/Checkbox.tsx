@@ -1,14 +1,15 @@
 import {
   forwardRef,
-  useId,
   type ComponentPropsWithoutRef,
   type ComponentRef,
   type ReactNode,
 } from "react";
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
+import { useField } from "../../hooks/useField";
 import { CheckIcon } from "../../icons/CheckIcon";
 import { DashIcon } from "../../icons/DashIcon";
 import { cx } from "../../utils/cx";
+import { FieldHelper } from "../field/FieldHelper";
 import "./Checkbox.css";
 
 export type CheckboxSize = "sm" | "md";
@@ -36,10 +37,7 @@ export const Checkbox = forwardRef<ComponentRef<typeof CheckboxPrimitive.Root>, 
     },
     ref,
   ) => {
-    const generatedId = useId();
-    const checkboxId = id ?? generatedId;
-    const helperId = `${checkboxId}-helper`;
-    const helperContent = error && errorMessage ? errorMessage : helperText;
+    const field = useField({ id, helperText, error, errorMessage });
 
     const wrapperClasses = cx(
       "q-checkbox",
@@ -49,17 +47,13 @@ export const Checkbox = forwardRef<ComponentRef<typeof CheckboxPrimitive.Root>, 
       className,
     );
 
-    const helperClasses = cx("q-checkbox__helper", error && "q-checkbox__helper--error");
-
     return (
       <div className={wrapperClasses}>
         <div className="q-checkbox__row">
           <CheckboxPrimitive.Root
             ref={ref}
-            id={checkboxId}
+            {...field.controlProps}
             disabled={disabled}
-            aria-invalid={error || undefined}
-            aria-describedby={helperContent ? helperId : undefined}
             className="q-checkbox__control"
             {...rest}
           >
@@ -69,16 +63,12 @@ export const Checkbox = forwardRef<ComponentRef<typeof CheckboxPrimitive.Root>, 
             </CheckboxPrimitive.Indicator>
           </CheckboxPrimitive.Root>
           {label && (
-            <label className="q-checkbox__label" htmlFor={checkboxId}>
+            <label className="q-checkbox__label" htmlFor={field.controlId}>
               {label}
             </label>
           )}
         </div>
-        {helperContent && (
-          <div id={helperId} className={helperClasses}>
-            {helperContent}
-          </div>
-        )}
+        <FieldHelper block="q-checkbox" {...field.helperProps} />
       </div>
     );
   },

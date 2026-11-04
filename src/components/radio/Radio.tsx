@@ -1,6 +1,8 @@
 import { forwardRef, useId, type ComponentPropsWithoutRef, type ComponentRef } from "react";
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
+import { useField } from "../../hooks/useField";
 import { cx } from "../../utils/cx";
+import { FieldHelper } from "../field/FieldHelper";
 import "./Radio.css";
 
 export type RadioGroupOrientation = "horizontal" | "vertical";
@@ -35,11 +37,8 @@ const RadioGroupRoot = forwardRef<ComponentRef<typeof RadioGroupPrimitive.Root>,
     },
     ref,
   ) => {
-    const generatedId = useId();
-    const groupId = id ?? generatedId;
-    const labelId = `${groupId}-label`;
-    const helperId = `${groupId}-helper`;
-    const helperContent = error && errorMessage ? errorMessage : helperText;
+    const field = useField({ id, helperText, error, errorMessage });
+    const labelId = `${field.controlId}-label`;
 
     const wrapperClasses = cx(
       "q-radio-group",
@@ -48,8 +47,6 @@ const RadioGroupRoot = forwardRef<ComponentRef<typeof RadioGroupPrimitive.Root>,
       disabled && "q-radio-group--disabled",
       className,
     );
-
-    const helperClasses = cx("q-radio-group__helper", error && "q-radio-group__helper--error");
 
     return (
       <div className={wrapperClasses}>
@@ -60,22 +57,16 @@ const RadioGroupRoot = forwardRef<ComponentRef<typeof RadioGroupPrimitive.Root>,
         )}
         <RadioGroupPrimitive.Root
           ref={ref}
-          id={groupId}
+          {...field.controlProps}
           orientation={orientation}
           disabled={disabled}
           aria-labelledby={label ? labelId : undefined}
-          aria-describedby={helperContent ? helperId : undefined}
-          aria-invalid={error || undefined}
           className={`q-radio-group__items q-radio-group__items--${orientation}`}
           {...rest}
         >
           {children}
         </RadioGroupPrimitive.Root>
-        {helperContent && (
-          <div id={helperId} className={helperClasses}>
-            {helperContent}
-          </div>
-        )}
+        <FieldHelper block="q-radio-group" {...field.helperProps} />
       </div>
     );
   },

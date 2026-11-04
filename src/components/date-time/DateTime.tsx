@@ -1,7 +1,9 @@
-import { forwardRef, useId, useState, type ButtonHTMLAttributes } from "react";
+import { forwardRef, useState, type ButtonHTMLAttributes } from "react";
 import * as Popover from "@radix-ui/react-popover";
+import { useField } from "../../hooks/useField";
 import { CalendarIcon } from "../../icons/CalendarIcon";
 import { cx } from "../../utils/cx";
+import { FieldHelper } from "../field/FieldHelper";
 import { Calendar } from "./Calendar";
 import { formatDate, startOfDay } from "./DateTime.utils";
 import "./DateTime.css";
@@ -40,9 +42,7 @@ export const DateTime = forwardRef<HTMLButtonElement, DateTimeProps>(
     },
     ref,
   ) => {
-    const generatedId = useId();
-    const triggerId = id ?? generatedId;
-    const helperId = `${triggerId}-helper`;
+    const field = useField({ id, helperText, error, errorMessage });
 
     const isControlled = value !== undefined;
     const [internalValue, setInternalValue] = useState<Date | null>(defaultValue);
@@ -65,13 +65,10 @@ export const DateTime = forwardRef<HTMLButtonElement, DateTimeProps>(
       className,
     );
 
-    const helperContent = error && errorMessage ? errorMessage : helperText;
-    const helperClasses = cx("q-date-time__helper", error && "q-date-time__helper--error");
-
     return (
       <div className={wrapperClasses}>
         {label && (
-          <label className="q-date-time__label" htmlFor={triggerId}>
+          <label className="q-date-time__label" htmlFor={field.controlId}>
             {label}
           </label>
         )}
@@ -79,12 +76,10 @@ export const DateTime = forwardRef<HTMLButtonElement, DateTimeProps>(
           <Popover.Trigger asChild>
             <button
               ref={ref}
-              id={triggerId}
+              {...field.controlProps}
               type="button"
               className="q-date-time__trigger"
               disabled={disabled}
-              aria-invalid={error || undefined}
-              aria-describedby={helperContent ? helperId : undefined}
               {...rest}
             >
               <span className="q-date-time__value">
@@ -106,11 +101,7 @@ export const DateTime = forwardRef<HTMLButtonElement, DateTimeProps>(
             </Popover.Content>
           </Popover.Portal>
         </Popover.Root>
-        {helperContent && (
-          <div id={helperId} className={helperClasses}>
-            {helperContent}
-          </div>
-        )}
+        <FieldHelper block="q-date-time" {...field.helperProps} />
       </div>
     );
   },
