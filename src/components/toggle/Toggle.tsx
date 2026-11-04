@@ -1,12 +1,13 @@
 import {
   forwardRef,
-  useId,
   type ComponentPropsWithoutRef,
   type ComponentRef,
   type ReactNode,
 } from "react";
 import * as SwitchPrimitive from "@radix-ui/react-switch";
+import { useField } from "../../hooks/useField";
 import { cx } from "../../utils/cx";
+import { FieldHelper } from "../field/FieldHelper";
 import "./Toggle.css";
 
 export type ToggleSize = "sm" | "md";
@@ -37,10 +38,7 @@ export const Toggle = forwardRef<ComponentRef<typeof SwitchPrimitive.Root>, Togg
     },
     ref,
   ) => {
-    const generatedId = useId();
-    const toggleId = id ?? generatedId;
-    const helperId = `${toggleId}-helper`;
-    const helperContent = error && errorMessage ? errorMessage : helperText;
+    const field = useField({ id, helperText, error, errorMessage });
 
     const wrapperClasses = cx(
       "q-toggle",
@@ -50,15 +48,11 @@ export const Toggle = forwardRef<ComponentRef<typeof SwitchPrimitive.Root>, Togg
       className,
     );
 
-    const helperClasses = cx("q-toggle__helper", error && "q-toggle__helper--error");
-
     const control = (
       <SwitchPrimitive.Root
         ref={ref}
-        id={toggleId}
+        {...field.controlProps}
         disabled={disabled}
-        aria-invalid={error || undefined}
-        aria-describedby={helperContent ? helperId : undefined}
         className="q-toggle__control"
         {...rest}
       >
@@ -67,7 +61,7 @@ export const Toggle = forwardRef<ComponentRef<typeof SwitchPrimitive.Root>, Togg
     );
 
     const labelElement = label && (
-      <label className="q-toggle__label" htmlFor={toggleId}>
+      <label className="q-toggle__label" htmlFor={field.controlId}>
         {label}
       </label>
     );
@@ -79,11 +73,7 @@ export const Toggle = forwardRef<ComponentRef<typeof SwitchPrimitive.Root>, Togg
           {control}
           {labelPosition === "right" && labelElement}
         </div>
-        {helperContent && (
-          <div id={helperId} className={helperClasses}>
-            {helperContent}
-          </div>
-        )}
+        <FieldHelper block="q-toggle" {...field.helperProps} />
       </div>
     );
   },

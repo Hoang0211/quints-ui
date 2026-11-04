@@ -1,5 +1,7 @@
-import { forwardRef, useId, type TextareaHTMLAttributes } from "react";
+import { forwardRef, type TextareaHTMLAttributes } from "react";
+import { useField } from "../../hooks/useField";
 import { cx } from "../../utils/cx";
+import { FieldHelper } from "../field/FieldHelper";
 import "./Textarea.css";
 
 export type TextareaVariant = "outline" | "filled";
@@ -35,10 +37,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     },
     ref,
   ) => {
-    const generatedId = useId();
-    const textareaId = id ?? generatedId;
-    const helperId = `${textareaId}-helper`;
-    const helperContent = error && errorMessage ? errorMessage : helperText;
+    const field = useField({ id, helperText, error, errorMessage });
 
     const wrapperClasses = cx(
       "q-textarea",
@@ -52,29 +51,21 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
 
     const controlClasses = cx("q-textarea__control", `q-textarea__control--${resize}`);
 
-    const helperClasses = cx("q-textarea__helper", error && "q-textarea__helper--error");
-
     return (
       <div className={wrapperClasses}>
         {label && (
-          <label className="q-textarea__label" htmlFor={textareaId}>
+          <label className="q-textarea__label" htmlFor={field.controlId}>
             {label}
           </label>
         )}
         <textarea
           ref={ref}
-          id={textareaId}
+          {...field.controlProps}
           className={controlClasses}
           disabled={disabled}
-          aria-invalid={error || undefined}
-          aria-describedby={helperContent ? helperId : undefined}
           {...rest}
         />
-        {helperContent && (
-          <div id={helperId} className={helperClasses}>
-            {helperContent}
-          </div>
-        )}
+        <FieldHelper block="q-textarea" {...field.helperProps} />
       </div>
     );
   },
