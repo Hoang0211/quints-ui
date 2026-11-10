@@ -162,6 +162,12 @@ export type {
   TableCellProps,
 } from "./components/table/Table";
 
+export { TablePagination } from "./components/table-pagination/TablePagination";
+export type {
+  TablePaginationProps,
+  TablePaginationSize,
+} from "./components/table-pagination/TablePagination";
+
 export { Toast } from "./components/toast/Toast";
 export { Toaster } from "./components/toast/Toaster";
 export { useToast } from "./components/toast/useToast";
